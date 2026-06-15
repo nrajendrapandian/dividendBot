@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dividend Portfolio — $20K Blend</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f0;
+      --bg-success: #eaf3de;
+      --bg-warning: #faeeda;
+      --bg-danger: #fcebeb;
+      --bg-info: #e6f1fb;
+      --text: #1a1a18;
+      --text-secondary: #5f5e5a;
+      --text-success: #27500a;
+      --text-warning: #633806;
+      --text-danger: #791f1f;
+      --text-info: #0c447c;
+      --border: rgba(0,0,0,0.12);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1a;
+        --bg-secondary: #2a2a27;
+        --bg-success: #173404;
+        --bg-warning: #412402;
+        --bg-danger: #501313;
+        --bg-info: #042c53;
+        --text: #f0ede6;
+        --text-secondary: #b4b2a9;
+        --text-success: #c0dd97;
+        --text-warning: #fac775;
+        --text-danger: #f7c1c1;
+        --text-info: #b5d4f4;
+        --border: rgba(255,255,255,0.12);
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: var(--bg);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+      border: 0.5px solid var(--border);
+    }
+
+    .metric-card .label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .metric-card .value {
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    .metric-card .value.green { color: var(--text-success); }
+
+    .holdings { display: grid; gap: 10px; margin-bottom: 1.5rem; }
+
+    .holding-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+    }
+
+    .holding-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .holding-left { display: flex; align-items: center; gap: 10px; }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: var(--radius-md);
+    }
+
+    .badge-blue { background: var(--bg-info); color: var(--text-info); }
+    .badge-green { background: var(--bg-success); color: var(--text-success); }
+    .badge-amber { background: var(--bg-warning); color: var(--text-warning); }
+
+    .holding-name { font-size: 15px; font-weight: 500; }
+
+    .holding-right { text-align: right; }
+    .holding-right .amount { font-size: 15px; font-weight: 500; }
+    .holding-right .pct { font-size: 12px; color: var(--text-secondary); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .stats .stat-label { color: var(--text-secondary); margin-bottom: 2px; }
+    .stats .stat-val { font-weight: 500; }
+    .stat-val.high { color: var(--text-success); }
+    .stat-val.med { color: var(--text-warning); }
+    .stat-val.low { color: var(--text-danger); }
+
+    .holding-note {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .tax-legend {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      border: 0.5px solid var(--border);
+    }
+
+    .tax-legend h3 { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+
+    .tax-legend ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+    }
+
+    .tax-legend ul li.high { color: var(--text-success); }
+    .tax-legend ul li.med { color: var(--text-warning); }
+    .tax-legend ul li.low { color: var(--text-danger); }
+
+    .tax-tip {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .chart-section { margin-bottom: 1.5rem; }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .chart-legend span { display: flex; align-items: center; gap: 4px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+    .chart-wrap { position: relative; width: 100%; height: 260px; }
+
+    footer {
+      font-size: 12px;
+      color: var(--text-secondary);
+      border-top: 0.5px solid var(--border);
+      padding-top: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Dividend portfolio — $20K blend</h1>
+    <p>Blended income + growth strategy across 5 ETFs &middot; Est. ~$930/yr &middot; ~4.6% blended yield</p>
+  </header>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="label">Total invested</div>
+      <div class="value">$20,000</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Est. annual income</div>
+      <div class="value green">~$930</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Blended yield</div>
+      <div class="value">~4.6%</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Monthly income</div>
+      <div class="value">~$78</div>
+    </div>
+  </div>
+
+  <div class="holdings">
+
+    <div class="holding-card">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-blue">Growth core</span>
+          <span class="holding-name">SCHD</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount">$7,000</div>
+          <div class="pct">35%</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">3.5%</div></div>
+        <div><div class="stat-label">Annual income</div><div class="stat-val">~$245</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+      </div>
+      <p class="holding-note">Qualified dividends taxed at 0–20% LTCG rate. Dividend growth ~10%/yr historically.</p>
+    </div>
+
+    <div class="holding-card">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-blue">Growth core</span>
+          <span class="holding-name">DGRO</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount">$4,000</div>
+          <div class="pct">20%</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">2.5%</div></div>
+        <div><div class="stat-label">Annual income</div><div class="stat-val">~$100</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+      </div>
+      <p class="holding-note">Mostly qualified dividends. Complements SCHD with broader tech exposure and quality screen.</p>
+    </div>
+
+    <div class="holding-card">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-green">Income</span>
+          <span class="holding-name">SPYI</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount">$4,000</div>
+          <div class="pct">20%</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">11–12%</div></div>
+        <div><div class="stat-label">Annual income</div><div class="stat-val">~$460</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val med">Medium ★★☆</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
+      </div>
+      <p class="holding-note">Section 1256 contracts: 60% taxed at LTCG rate, 40% at ordinary income. Better than JEPI/QYLD.</p>
+    </div>
+
+    <div class="holding-card">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-green">Income</span>
+          <span class="holding-name">JEPI</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount">$3,000</div>
+          <div class="pct">15%</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">7–8%</div></div>
+        <div><div class="stat-label">Annual income</div><div class="stat-val">~$225</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val med">Medium ★★☆</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
+      </div>
+      <p class="holding-note">ELN income mostly ordinary rates. Lower volatility vs. SPYI; good defensive income anchor.</p>
+    </div>
+
+    <div class="holding-card">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-amber">Real estate</span>
+          <span class="holding-name">VNQ</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount">$2,000</div>
+          <div class="pct">10%</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">4–5%</div></div>
+        <div><div class="stat-label">Annual income</div><div class="stat-val">~$90</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val low">Low ★☆☆</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+      </div>
+      <p class="holding-note">REIT dividends are non-qualified (ordinary income rates). Best held in a Roth IRA or 401(k).</p>
+    </div>
+
+  </div>
+
+  <div class="tax-legend">
+    <h3>Tax efficiency legend</h3>
+    <ul>
+      <li class="high">★★★ High — qualified dividends or 1256 contracts (LTCG rates 0–20%)</li>
+      <li class="med">★★☆ Medium — mix of qualified + ordinary income</li>
+      <li class="low">★☆☆ Low — mostly ordinary income rates (up to 37%)</li>
+    </ul>
+    <p class="tax-tip">Tip: hold ★☆☆ ETFs (VNQ, high-yield) in tax-advantaged accounts (Roth IRA, 401k). Hold ★★★ ETFs in taxable brokerage.</p>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-legend">
+      <span><span class="legend-dot" style="background:#185FA5"></span>SCHD 35%</span>
+      <span><span class="legend-dot" style="background:#639922"></span>DGRO 20%</span>
+      <span><span class="legend-dot" style="background:#7F77DD"></span>SPYI 20%</span>
+      <span><span class="legend-dot" style="background:#1D9E75"></span>JEPI 15%</span>
+      <span><span class="legend-dot" style="background:#BA7517"></span>VNQ 10%</span>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="allocChart" role="img" aria-label="Doughnut chart: SCHD 35%, DGRO 20%, SPYI 20%, JEPI 15%, VNQ 10%">SCHD 35%, DGRO 20%, SPYI 20%, JEPI 15%, VNQ 10%</canvas>
+    </div>
+  </div>
+
+  <footer>
+    <p>Disclaimer: this is educational content, not personalized financial advice. Yields fluctuate and past performance does not guarantee future results. Consult a fee-only financial advisor before investing.</p>
+  </footer>
+
+</div>
+<script>
+  new Chart(document.getElementById('allocChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['SCHD', 'DGRO', 'SPYI', 'JEPI', 'VNQ'],
+      datasets: [{
+        data: [35, 20, 20, 15, 10],
+        backgroundColor: ['#185FA5','#639922','#7F77DD','#1D9E75','#BA7517'],
+        borderWidth: 2,
+        borderColor: 'transparent'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.parsed}%` }
+        }
+      },
+      cutout: '60%'
+    }
+  });
+</script>
+</body>
+</html>
