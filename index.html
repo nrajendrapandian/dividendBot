@@ -217,6 +217,14 @@
     .scenario-btn:hover { background: var(--bg-secondary); }
     .scenario-btn.active { border-color: var(--text-info); color: var(--text-info); background: var(--bg-info); }
 
+    .rotation-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .switch { position: relative; display: inline-block; width: 36px; height: 20px; cursor: pointer; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch-track { position: absolute; inset: 0; background: var(--border); border-radius: 10px; transition: background 0.15s; }
+    .switch-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: var(--bg); border-radius: 50%; transition: transform 0.15s; }
+    .switch input:checked + .switch-track { background: var(--text-info); }
+    .switch input:checked + .switch-track .switch-thumb { transform: translateX(16px); }
+
     footer {
       font-size: 12px;
       color: var(--text-secondary);
@@ -461,6 +469,26 @@
       <canvas id="growthChart" role="img" aria-label="Line chart showing portfolio growth over time vs target needed for $5K/month income">Portfolio growth projection.</canvas>
     </div>
 
+    <p class="section-label">Two-phase rotation</p>
+    <div class="rotation-toggle">
+      <label class="switch">
+        <input type="checkbox" id="sl-rotation" checked />
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+      </label>
+      <span style="font-size: 13px;">Shift allocation from growth funds to income funds in the final <span id="rotation-years-label">2</span> years before goal</span>
+    </div>
+    <p class="holding-note" style="margin-bottom: 1rem;">
+      Growth phase (SCHD/DGRO/VIG-heavy) maximizes total return while building the pile. As you approach your target date, the model rotates toward SPYI/JEPI-style income funds, trading some growth for the higher current yield needed to actually produce $5,000/month.
+    </p>
+
+    <div class="growth-legend">
+      <span><span class="legend-dot" style="background:#7F77DD"></span>Growth allocation</span>
+      <span><span class="legend-dot" style="background:#1D9E75"></span>Income allocation</span>
+    </div>
+    <div class="chart-wrap" style="height: 220px; margin-bottom: 1rem;">
+      <canvas id="allocationChart" role="img" aria-label="Stacked bar chart showing allocation shifting from growth funds to income funds in the final years before the goal">Allocation rotation over time.</canvas>
+    </div>
+
   </div>
 
   <footer>
@@ -502,7 +530,9 @@
 
   const START = 20000;
   const TARGET_MONTHLY_INC = 5000;
+  const ROTATION_YEARS = 2;
   let growthChart = null;
+  let allocationChart = null;
 
   function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
 
@@ -569,6 +599,32 @@
       growthChart.data.datasets[1].data = targetLine;
       growthChart.update();
     }
+
+    updateAllocationChart(years);
+  }
+
+  function updateAllocationChart(years) {
+    const rotationOn = document.getElementById('sl-rotation').checked;
+    const rotYears = Math.min(ROTATION_YEARS, years);
+    document.getElementById('rotation-years-label').textContent = rotYears;
+
+    const labels = Array.from({length: years + 1}, (_, i) => 'Yr ' + i);
+    const incomePct = labels.map((_, yr) => {
+      if (!rotationOn) return 30;
+      const yearsFromGoal = years - yr;
+      if (yearsFromGoal > rotYears) return 30;
+      if (yearsFromGoal <= 0) return 80;
+      const progress = 1 - (yearsFromGoal / rotYears);
+      return Math.round(30 + progress * 50);
+    });
+    const growthPct = incomePct.map(p => 100 - p);
+
+    if (allocationChart) {
+      allocationChart.data.labels = labels;
+      allocationChart.data.datasets[0].data = growthPct;
+      allocationChart.data.datasets[1].data = incomePct;
+      allocationChart.update();
+    }
   }
 
   function initPlanner() {
@@ -611,6 +667,40 @@
         }
       }
     });
+
+    allocationChart = new Chart(document.getElementById('allocationChart'), {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Growth allocation',
+            data: [],
+            backgroundColor: '#7F77DD',
+            stack: 'alloc'
+          },
+          {
+            label: 'Income allocation',
+            data: [],
+            backgroundColor: '#1D9E75',
+            stack: 'alloc'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
+        },
+        scales: {
+          x: { stacked: true },
+          y: { stacked: true, min: 0, max: 100, ticks: { callback: v => v + '%' } }
+        }
+      }
+    });
+
     updatePlanner();
   }
 
@@ -623,6 +713,11 @@
     document.getElementById(activeId).classList.add('active');
     updatePlanner();
   }
+
+  document.getElementById('sl-rotation').addEventListener('change', () => {
+    const years = parseInt(document.getElementById('sl-years').value);
+    updateAllocationChart(years);
+  });
 
   ['sl-monthly','sl-years','sl-return','sl-yield'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
