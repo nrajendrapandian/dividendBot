@@ -601,7 +601,7 @@
     document.getElementById('m-reached').textContent = fmtK(reached);
     const incEl = document.getElementById('m-income');
     incEl.textContent = fmt(moInc)+'/mo';
-    incEl.className = 'value '+(moInc >= TARGET_MONTHLY_INC ? 'green' : 'warn');
+    incEl.className = 'value '+(moInc >= goal ? 'green' : 'warn');
     document.getElementById('m-invested').textContent = fmtK(totalInv);
 
     document.getElementById('v-start').textContent       = fmt(start);
