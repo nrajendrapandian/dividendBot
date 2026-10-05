@@ -60,38 +60,6 @@
     header h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
     header p { font-size: 14px; color: var(--text-secondary); }
 
-    .tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 1.5rem;
-      border-bottom: 0.5px solid var(--border);
-      padding-bottom: 0;
-    }
-
-    .tab-btn {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      padding: 8px 16px;
-      cursor: pointer;
-      margin-bottom: -1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
-    .tab-btn:hover { color: var(--text); }
-
-    .tab-btn.active {
-      color: var(--text);
-      font-weight: 500;
-      border-bottom-color: var(--text);
-    }
-
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
     .metrics {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -172,6 +140,7 @@
     .chart-wrap { position: relative; width: 100%; height: 260px; }
 
     .section-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 10px; margin-top: 1.5rem; }
+    .section-divider { border: none; border-top: 0.5px solid var(--border); margin: 2rem 0 1.5rem; }
 
     .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
     .slider-row label { font-size: 13px; color: var(--text-secondary); min-width: 160px; }
@@ -225,6 +194,53 @@
     .switch input:checked + .switch-track { background: var(--text-info); }
     .switch input:checked + .switch-track .switch-thumb { transform: translateX(16px); }
 
+    /* Year-by-year table */
+    .table-scroll { overflow-x: auto; margin-bottom: 1.5rem; border-radius: var(--radius-lg); border: 0.5px solid var(--border); }
+    table.year-plan { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--bg); }
+    table.year-plan th {
+      background: var(--bg-secondary);
+      font-weight: 500;
+      font-size: 11px;
+      color: var(--text-secondary);
+      padding: 8px 10px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 0.5px solid var(--border);
+    }
+    table.year-plan th:first-child { text-align: left; }
+    table.year-plan td {
+      padding: 7px 10px;
+      text-align: right;
+      border-bottom: 0.5px solid var(--border);
+      white-space: nowrap;
+    }
+    table.year-plan td:first-child { text-align: left; font-weight: 500; }
+    table.year-plan tr:last-child td { border-bottom: none; }
+    table.year-plan tr.rotation-row td { background: rgba(29,158,117,0.06); }
+    table.year-plan tr.rotation-row td:first-child::after {
+      content: " ↻";
+      color: var(--text-success);
+      font-size: 10px;
+    }
+    .dim { color: var(--text-secondary); }
+    .income-cell { color: var(--text-success); font-weight: 500; }
+
+    /* ETF section */
+    .etf-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .phase-badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: var(--radius-md);
+      background: var(--bg-info);
+      color: var(--text-info);
+      font-weight: 500;
+    }
+
     footer {
       font-size: 12px;
       color: var(--text-secondary);
@@ -239,239 +255,258 @@
 
   <header>
     <h1>Dividend portfolio</h1>
-    <p>$20K blend &middot; blended income + growth strategy</p>
+    <p>Goal: $5,000/month &middot; blended income + growth strategy</p>
   </header>
 
-  <nav class="tabs" role="tablist">
-    <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('portfolio', this)">Portfolio blend</button>
-    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('planner', this)">Goal planner</button>
-  </nav>
+  <!-- GOAL PLANNER -->
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="label">Portfolio needed</div>
+      <div class="value blue" id="m-needed">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Portfolio reached</div>
+      <div class="value" id="m-reached">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Monthly income</div>
+      <div class="value" id="m-income">—</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Total invested</div>
+      <div class="value" id="m-invested">—</div>
+    </div>
+  </div>
 
-  <div id="tab-portfolio" class="tab-panel active">
+  <div class="verdict" id="verdict-box">
+    <div class="verdict-row"><span class="k">Starting balance</span><span class="v">$20,000</span></div>
+    <div class="verdict-row"><span class="k">Monthly contribution</span><span class="v" id="v-monthly">—</span></div>
+    <div class="verdict-row"><span class="k">Timeline</span><span class="v" id="v-years">—</span></div>
+    <div class="verdict-row"><span class="k">Portfolio at end</span><span class="v" id="v-port">—</span></div>
+    <div class="verdict-row"><span class="k">Annual dividend income</span><span class="v" id="v-annual">—</span></div>
+    <div class="verdict-row"><span class="k">Monthly dividend income</span><span class="v" id="v-monthly-inc">—</span></div>
+    <div class="verdict-row"><span class="k">Gap to $5K/month goal</span><span class="v" id="v-gap">—</span></div>
+  </div>
 
-    <div class="metrics">
-      <div class="metric-card">
-        <div class="label">Total invested</div>
-        <div class="value">$20,000</div>
+  <p class="section-label">Adjust your inputs</p>
+
+  <div class="slider-row">
+    <label for="sl-monthly">Monthly contribution</label>
+    <input type="range" id="sl-monthly" min="500" max="15000" step="100" value="2000" />
+    <span class="readout" id="out-monthly">$2,000</span>
+  </div>
+  <div class="slider-row">
+    <label for="sl-years">Target timeline</label>
+    <input type="range" id="sl-years" min="3" max="20" step="1" value="10" />
+    <span class="readout" id="out-years">10 yrs</span>
+  </div>
+  <div class="slider-row">
+    <label for="sl-return">Blended annual return</label>
+    <input type="range" id="sl-return" min="5" max="12" step="0.5" value="8" />
+    <span class="readout" id="out-return">8.0%</span>
+  </div>
+  <div class="slider-row">
+    <label for="sl-yield">Target yield at exit</label>
+    <input type="range" id="sl-yield" min="5" max="12" step="0.5" value="7" />
+    <span class="readout" id="out-yield">7.0%</span>
+  </div>
+
+  <p class="section-label" style="margin-top: 1.5rem;">Preset scenarios</p>
+  <div class="scenario-btns">
+    <button class="scenario-btn" id="sc-aggressive" onclick="setScenario(5000,5,8,7,'sc-aggressive')">Aggressive — 5 yrs</button>
+    <button class="scenario-btn" id="sc-moderate" onclick="setScenario(3000,7,8,7,'sc-moderate')">Moderate — 7 yrs</button>
+    <button class="scenario-btn active" id="sc-conservative" onclick="setScenario(2000,10,8,7,'sc-conservative')">Conservative — 10 yrs</button>
+  </div>
+
+  <div class="growth-legend">
+    <span><span class="legend-dot" style="background:#185FA5"></span>Portfolio value</span>
+    <span style="display:flex;align-items:center;gap:4px;">
+      <span style="display:inline-block;width:18px;height:2px;border-top:2px dashed #639922;"></span>
+      Target for $5K/mo
+    </span>
+  </div>
+  <div class="chart-wrap" style="height: 280px; margin-bottom: 1.5rem;">
+    <canvas id="growthChart" role="img" aria-label="Line chart showing portfolio growth over time vs target needed for $5K/month income">Portfolio growth projection.</canvas>
+  </div>
+
+  <!-- YEAR-BY-YEAR TABLE -->
+  <p class="section-label">Year-by-year investment plan</p>
+  <p class="holding-note" style="margin-bottom: 12px;">
+    Monthly amounts to invest per ETF based on your contribution and the phase rotation schedule. <span style="color:var(--text-success);">↻ rows</span> are rotation years — allocation shifts toward income funds.
+  </p>
+  <div class="table-scroll">
+    <table class="year-plan">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>SCHD/mo</th>
+          <th>DGRO/mo</th>
+          <th>VIG/mo</th>
+          <th>JEPI/mo</th>
+          <th>SPYI/mo</th>
+          <th>Portfolio</th>
+          <th>Income/mo</th>
+        </tr>
+      </thead>
+      <tbody id="year-plan-body"></tbody>
+    </table>
+  </div>
+
+  <!-- TWO-PHASE ROTATION -->
+  <p class="section-label">Allocation rotation</p>
+  <div class="rotation-toggle">
+    <label class="switch">
+      <input type="checkbox" id="sl-rotation" checked />
+      <span class="switch-track"><span class="switch-thumb"></span></span>
+    </label>
+    <span style="font-size: 13px;">Shift from growth to income funds in the final <span id="rotation-years-label">2</span> years before goal</span>
+  </div>
+  <p class="holding-note" style="margin-bottom: 1rem;">
+    Growth phase (SCHD/DGRO/VIG-heavy) maximizes total return while building the pile. As you approach your target date, the model rotates toward SPYI/JEPI-style income funds to generate the $5,000/month yield.
+  </p>
+
+  <div class="growth-legend">
+    <span><span class="legend-dot" style="background:#7F77DD"></span>Growth allocation</span>
+    <span><span class="legend-dot" style="background:#1D9E75"></span>Income allocation</span>
+  </div>
+  <div class="chart-wrap" style="height: 220px; margin-bottom: 1.5rem;">
+    <canvas id="allocationChart" role="img" aria-label="Stacked bar chart showing allocation shifting from growth funds to income funds in the final years">Allocation rotation over time.</canvas>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- ETF PICKS (moved from Portfolio blend) -->
+  <div class="etf-section-header">
+    <p class="section-label" style="margin: 0;">ETF picks</p>
+    <span class="phase-badge" id="phase-label">Growth phase</span>
+  </div>
+  <p class="holding-note" style="margin-bottom: 1rem;">
+    Growth-phase allocation — weighted toward dividend growth and total return. Income funds (SPYI/JEPI-heavy) replace this mix in the final years. Allocations and amounts update with your sliders above.
+  </p>
+
+  <div class="chart-legend" style="margin-bottom: 10px;">
+    <span><span class="legend-dot" style="background:#185FA5"></span>SCHD</span>
+    <span><span class="legend-dot" style="background:#639922"></span>DGRO</span>
+    <span><span class="legend-dot" style="background:#7F77DD"></span>VIG</span>
+    <span><span class="legend-dot" style="background:#1D9E75"></span>JEPI</span>
+    <span><span class="legend-dot" style="background:#E07B39"></span>SPYI</span>
+  </div>
+  <div class="chart-wrap" style="height: 220px; margin-bottom: 1.5rem;">
+    <canvas id="allocChart" role="img" aria-label="Doughnut chart showing current ETF allocation mix"></canvas>
+  </div>
+
+  <div class="holdings" id="etf-cards">
+
+    <div class="holding-card" id="card-SCHD">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-blue">Growth core</span>
+          <span class="holding-name">SCHD</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount" id="schd-amount">—</div>
+          <div class="pct" id="schd-pct">50%</div>
+        </div>
       </div>
-      <div class="metric-card">
-        <div class="label">Est. annual income</div>
-        <div class="value green">~$680</div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">3.5%</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+        <div><div class="stat-label">Phase</div><div class="stat-val">Both</div></div>
       </div>
-      <div class="metric-card">
-        <div class="label">Blended yield</div>
-        <div class="value">~3.4%</div>
-      </div>
-      <div class="metric-card">
-        <div class="label">Monthly income</div>
-        <div class="value">~$57</div>
-      </div>
+      <p class="holding-note">Qualified dividends (0–20% LTCG rate). Dividend growth ~10%/yr. Core compounder in both phases.</p>
     </div>
 
-    <p class="holding-note" style="margin-bottom: 1rem;">
-      Growth-phase allocation — weighted toward dividend growth and total return rather than current yield. SPYI/JEPI-style income funds get phased in later, closer to your goal date. See the <strong>Goal planner</strong> tab for the rotation model.
-    </p>
-
-    <div class="holdings">
-
-      <div class="holding-card">
-        <div class="holding-header">
-          <div class="holding-left">
-            <span class="badge badge-blue">Growth core</span>
-            <span class="holding-name">SCHD</span>
-          </div>
-          <div class="holding-right">
-            <div class="amount">$10,000</div>
-            <div class="pct">50%</div>
-          </div>
+    <div class="holding-card" id="card-DGRO">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-blue">Growth core</span>
+          <span class="holding-name">DGRO</span>
         </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">3.5%</div></div>
-          <div><div class="stat-label">Annual income</div><div class="stat-val">~$350</div></div>
-          <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+        <div class="holding-right">
+          <div class="amount" id="dgro-amount">—</div>
+          <div class="pct" id="dgro-pct">25%</div>
         </div>
-        <p class="holding-note">Qualified dividends taxed at 0–20% LTCG rate. Dividend growth ~10%/yr historically. Core compounder.</p>
       </div>
-
-      <div class="holding-card">
-        <div class="holding-header">
-          <div class="holding-left">
-            <span class="badge badge-blue">Growth core</span>
-            <span class="holding-name">DGRO</span>
-          </div>
-          <div class="holding-right">
-            <div class="amount">$5,000</div>
-            <div class="pct">25%</div>
-          </div>
-        </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">2.5%</div></div>
-          <div><div class="stat-label">Annual income</div><div class="stat-val">~$125</div></div>
-          <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
-        </div>
-        <p class="holding-note">Mostly qualified dividends. Complements SCHD with broader tech exposure and quality screen.</p>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">2.5%</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+        <div><div class="stat-label">Phase</div><div class="stat-val">Both</div></div>
       </div>
-
-      <div class="holding-card">
-        <div class="holding-header">
-          <div class="holding-left">
-            <span class="badge badge-blue">Growth core</span>
-            <span class="holding-name">VIG</span>
-          </div>
-          <div class="holding-right">
-            <div class="amount">$3,000</div>
-            <div class="pct">15%</div>
-          </div>
-        </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">1.8%</div></div>
-          <div><div class="stat-label">Annual income</div><div class="stat-val">~$54</div></div>
-          <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
-        </div>
-        <p class="holding-note">10+ years of consecutive dividend growth. Adds Aristocrat-style stability to the core.</p>
-      </div>
-
-      <div class="holding-card">
-        <div class="holding-header">
-          <div class="holding-left">
-            <span class="badge badge-green">Income</span>
-            <span class="holding-name">JEPI</span>
-          </div>
-          <div class="holding-right">
-            <div class="amount">$2,000</div>
-            <div class="pct">10%</div>
-          </div>
-        </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">7–8%</div></div>
-          <div><div class="stat-label">Annual income</div><div class="stat-val">~$150</div></div>
-          <div><div class="stat-label">Tax efficiency</div><div class="stat-val med">Medium ★★☆</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
-        </div>
-        <p class="holding-note">Light income/volatility stabilizer — less upside-capped than SPYI, kept small during the growth phase.</p>
-      </div>
-
+      <p class="holding-note">Broader tech + healthcare exposure. Complements SCHD with quality growth screen.</p>
     </div>
 
-    <div class="tax-legend">
-      <h3>Tax efficiency legend</h3>
-      <ul>
-        <li class="high">★★★ High — qualified dividends or 1256 contracts (LTCG rates 0–20%)</li>
-        <li class="med">★★☆ Medium — mix of qualified + ordinary income</li>
-        <li class="low">★☆☆ Low — mostly ordinary income rates (up to 37%)</li>
-      </ul>
-      <p class="tax-tip">Tip: hold ★★☆/★☆☆ funds in tax-advantaged accounts (Roth IRA, 401k) when possible. Hold ★★★ ETFs in taxable brokerage.</p>
+    <div class="holding-card" id="card-VIG">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-blue">Growth core</span>
+          <span class="holding-name">VIG</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount" id="vig-amount">—</div>
+          <div class="pct" id="vig-pct">15%</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">1.8%</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+        <div><div class="stat-label">Phase</div><div class="stat-val">Growth only</div></div>
+      </div>
+      <p class="holding-note">10+ years of consecutive dividend growth. Dividend Aristocrat stability. Exited in income phase.</p>
     </div>
 
-    <div class="chart-section">
-      <div class="chart-legend">
-        <span><span class="legend-dot" style="background:#185FA5"></span>SCHD 50%</span>
-        <span><span class="legend-dot" style="background:#639922"></span>DGRO 25%</span>
-        <span><span class="legend-dot" style="background:#7F77DD"></span>VIG 15%</span>
-        <span><span class="legend-dot" style="background:#1D9E75"></span>JEPI 10%</span>
+    <div class="holding-card" id="card-JEPI">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-green">Income</span>
+          <span class="holding-name">JEPI</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount" id="jepi-amount">—</div>
+          <div class="pct" id="jepi-pct">10%</div>
+        </div>
       </div>
-      <div class="chart-wrap">
-        <canvas id="allocChart" role="img" aria-label="Doughnut chart: SCHD 50%, DGRO 25%, VIG 15%, JEPI 10%">SCHD 50%, DGRO 25%, VIG 15%, JEPI 10%</canvas>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">7–8%</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val med">Medium ★★☆</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
+        <div><div class="stat-label">Phase</div><div class="stat-val">Both</div></div>
       </div>
+      <p class="holding-note">Light income stabilizer in growth phase (10%). Grows to 25% in income phase. Less upside-capped than SPYI.</p>
+    </div>
+
+    <div class="holding-card" id="card-SPYI">
+      <div class="holding-header">
+        <div class="holding-left">
+          <span class="badge badge-amber">Income phase</span>
+          <span class="holding-name">SPYI</span>
+        </div>
+        <div class="holding-right">
+          <div class="amount" id="spyi-amount">—</div>
+          <div class="pct" id="spyi-pct">0%</div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><div class="stat-label">Yield</div><div class="stat-val">11–12%</div></div>
+        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
+        <div><div class="stat-label">Phase</div><div class="stat-val">Income only</div></div>
+      </div>
+      <p class="holding-note">Section 1256 (60% LTCG / 40% ordinary). 40% of income phase. Not used during accumulation — covered-call overlay caps growth upside.</p>
     </div>
 
   </div>
 
-  <div id="tab-planner" class="tab-panel">
-
-    <div class="metrics">
-      <div class="metric-card">
-        <div class="label">Portfolio needed</div>
-        <div class="value blue" id="m-needed">—</div>
-      </div>
-      <div class="metric-card">
-        <div class="label">Portfolio reached</div>
-        <div class="value" id="m-reached">—</div>
-      </div>
-      <div class="metric-card">
-        <div class="label">Monthly income</div>
-        <div class="value" id="m-income">—</div>
-      </div>
-      <div class="metric-card">
-        <div class="label">Total invested</div>
-        <div class="value" id="m-invested">—</div>
-      </div>
-    </div>
-
-    <div class="verdict" id="verdict-box">
-      <div class="verdict-row"><span class="k">Starting balance</span><span class="v">$20,000</span></div>
-      <div class="verdict-row"><span class="k">Monthly contribution</span><span class="v" id="v-monthly">—</span></div>
-      <div class="verdict-row"><span class="k">Timeline</span><span class="v" id="v-years">—</span></div>
-      <div class="verdict-row"><span class="k">Portfolio at end</span><span class="v" id="v-port">—</span></div>
-      <div class="verdict-row"><span class="k">Annual dividend income</span><span class="v" id="v-annual">—</span></div>
-      <div class="verdict-row"><span class="k">Monthly dividend income</span><span class="v" id="v-monthly-inc">—</span></div>
-      <div class="verdict-row"><span class="k">Gap to $5K/month goal</span><span class="v" id="v-gap">—</span></div>
-    </div>
-
-    <p class="section-label">Adjust your inputs</p>
-
-    <div class="slider-row">
-      <label for="sl-monthly">Monthly contribution</label>
-      <input type="range" id="sl-monthly" min="500" max="15000" step="100" value="5000" />
-      <span class="readout" id="out-monthly">$5,000</span>
-    </div>
-    <div class="slider-row">
-      <label for="sl-years">Target timeline</label>
-      <input type="range" id="sl-years" min="3" max="15" step="1" value="5" />
-      <span class="readout" id="out-years">5 yrs</span>
-    </div>
-    <div class="slider-row">
-      <label for="sl-return">Blended annual return</label>
-      <input type="range" id="sl-return" min="5" max="12" step="0.5" value="8" />
-      <span class="readout" id="out-return">8.0%</span>
-    </div>
-    <div class="slider-row">
-      <label for="sl-yield">Target yield at exit</label>
-      <input type="range" id="sl-yield" min="5" max="12" step="0.5" value="7" />
-      <span class="readout" id="out-yield">7.0%</span>
-    </div>
-
-    <p class="section-label" style="margin-top: 1.5rem;">Preset scenarios</p>
-    <div class="scenario-btns">
-      <button class="scenario-btn active" id="sc-aggressive" onclick="setScenario(5000,5,8,7,'sc-aggressive')">Aggressive — 5 yrs</button>
-      <button class="scenario-btn" id="sc-moderate" onclick="setScenario(3000,7,8,7,'sc-moderate')">Moderate — 7 yrs</button>
-      <button class="scenario-btn" id="sc-conservative" onclick="setScenario(2000,10,8,7,'sc-conservative')">Conservative — 10 yrs</button>
-    </div>
-
-    <div class="growth-legend">
-      <span><span class="legend-dot" style="background:#185FA5"></span>Portfolio value</span>
-      <span style="display:flex;align-items:center;gap:4px;">
-        <span style="display:inline-block;width:18px;height:2px;border-top:2px dashed #639922;"></span>
-        Target for $5K/mo
-      </span>
-    </div>
-    <div class="chart-wrap" style="height: 280px; margin-bottom: 1.5rem;">
-      <canvas id="growthChart" role="img" aria-label="Line chart showing portfolio growth over time vs target needed for $5K/month income">Portfolio growth projection.</canvas>
-    </div>
-
-    <p class="section-label">Two-phase rotation</p>
-    <div class="rotation-toggle">
-      <label class="switch">
-        <input type="checkbox" id="sl-rotation" checked />
-        <span class="switch-track"><span class="switch-thumb"></span></span>
-      </label>
-      <span style="font-size: 13px;">Shift allocation from growth funds to income funds in the final <span id="rotation-years-label">2</span> years before goal</span>
-    </div>
-    <p class="holding-note" style="margin-bottom: 1rem;">
-      Growth phase (SCHD/DGRO/VIG-heavy) maximizes total return while building the pile. As you approach your target date, the model rotates toward SPYI/JEPI-style income funds, trading some growth for the higher current yield needed to actually produce $5,000/month.
-    </p>
-
-    <div class="growth-legend">
-      <span><span class="legend-dot" style="background:#7F77DD"></span>Growth allocation</span>
-      <span><span class="legend-dot" style="background:#1D9E75"></span>Income allocation</span>
-    </div>
-    <div class="chart-wrap" style="height: 220px; margin-bottom: 1rem;">
-      <canvas id="allocationChart" role="img" aria-label="Stacked bar chart showing allocation shifting from growth funds to income funds in the final years before the goal">Allocation rotation over time.</canvas>
-    </div>
-
+  <div class="tax-legend">
+    <h3>Tax efficiency legend</h3>
+    <ul>
+      <li class="high">★★★ High — qualified dividends or Section 1256 (LTCG rates 0–20%)</li>
+      <li class="med">★★☆ Medium — mix of qualified + ordinary income</li>
+      <li class="low">★☆☆ Low — mostly ordinary income rates (up to 37%)</li>
+    </ul>
+    <p class="tax-tip">Tip: hold ★★☆/★☆☆ funds in tax-advantaged accounts (Roth IRA, 401k) when possible.</p>
   </div>
 
   <footer>
@@ -480,57 +515,102 @@
 
 </div>
 <script>
-  function switchTab(name, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-    document.getElementById('tab-' + name).classList.add('active');
-    btn.classList.add('active');
-    btn.setAttribute('aria-selected', 'true');
-    if (name === 'planner' && !growthChart) initPlanner();
-  }
-
-  new Chart(document.getElementById('allocChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['SCHD', 'DGRO', 'VIG', 'JEPI'],
-      datasets: [{
-        data: [50, 25, 15, 10],
-        backgroundColor: ['#185FA5','#639922','#7F77DD','#1D9E75'],
-        borderWidth: 2,
-        borderColor: 'transparent'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}%` } }
-      },
-      cutout: '60%'
-    }
-  });
-
   const START = 20000;
   const TARGET_MONTHLY_INC = 5000;
   const ROTATION_YEARS = 2;
+
+  const ETF_GROWTH = { SCHD: 0.50, DGRO: 0.25, VIG: 0.15, JEPI: 0.10, SPYI: 0.00 };
+  const ETF_INCOME = { SCHD: 0.25, DGRO: 0.10, VIG: 0.00, JEPI: 0.25, SPYI: 0.40 };
+  const ETF_YIELDS = { SCHD: 0.035, DGRO: 0.025, VIG: 0.018, JEPI: 0.075, SPYI: 0.11 };
+  const ETF_COLORS = { SCHD: '#185FA5', DGRO: '#639922', VIG: '#7F77DD', JEPI: '#1D9E75', SPYI: '#E07B39' };
+  const ETFS = ['SCHD', 'DGRO', 'VIG', 'JEPI', 'SPYI'];
+
   let growthChart = null;
   let allocationChart = null;
+  let allocDonut = null;
 
   function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+  function fmtK(n) { return n >= 1000000 ? '$' + (n/1000000).toFixed(2) + 'M' : '$' + (n/1000).toFixed(0) + 'K'; }
 
-  function calcPortfolio(monthly, years, annualReturn) {
+  function getAllocForYear(yr, years) {
+    const rotationOn = document.getElementById('sl-rotation').checked;
+    const rotYears = Math.min(ROTATION_YEARS, years);
+    const yearsFromGoal = years - yr;
+    if (!rotationOn || yearsFromGoal > rotYears) return { ...ETF_GROWTH };
+    if (yearsFromGoal <= 0) return { ...ETF_INCOME };
+    const progress = 1 - (yearsFromGoal / rotYears);
+    const result = {};
+    ETFS.forEach(etf => {
+      result[etf] = ETF_GROWTH[etf] + progress * (ETF_INCOME[etf] - ETF_GROWTH[etf]);
+    });
+    return result;
+  }
+
+  function getBlendedYield(alloc) {
+    return ETFS.reduce((sum, etf) => sum + alloc[etf] * ETF_YIELDS[etf], 0);
+  }
+
+  function calcPortfolioAtYear(monthly, yr, annualReturn) {
     const r = annualReturn / 100 / 12;
-    const n = years * 12;
+    const n = yr * 12;
     return START * Math.pow(1 + r, n) + monthly * (Math.pow(1 + r, n) - 1) / r;
   }
 
-  function buildYearlyData(monthly, years, annualReturn) {
-    const r = annualReturn / 100 / 12;
-    return Array.from({length: years + 1}, (_, yr) => {
-      const n = yr * 12;
-      return Math.round(START * Math.pow(1 + r, n) + (n === 0 ? 0 : monthly * (Math.pow(1 + r, n) - 1) / r));
+  function buildYearTable(monthly, years, annualReturn) {
+    const tbody = document.getElementById('year-plan-body');
+    tbody.innerHTML = '';
+    const currentYear = new Date().getFullYear();
+    const rotYears = Math.min(ROTATION_YEARS, years);
+
+    for (let yr = 1; yr <= years; yr++) {
+      const alloc = getAllocForYear(yr, years);
+      const portfolioValue = calcPortfolioAtYear(monthly, yr, annualReturn);
+      const blendedYield = getBlendedYield(alloc);
+      const monthlyIncome = portfolioValue * blendedYield / 12;
+      const yearsFromGoal = years - yr;
+      const isRotation = document.getElementById('sl-rotation').checked && yearsFromGoal < rotYears && yearsFromGoal >= 0;
+
+      const tr = document.createElement('tr');
+      if (isRotation) tr.className = 'rotation-row';
+
+      const schd = alloc.SCHD > 0 ? fmt(monthly * alloc.SCHD) : '<span class="dim">—</span>';
+      const dgro = alloc.DGRO > 0 ? fmt(monthly * alloc.DGRO) : '<span class="dim">—</span>';
+      const vig  = alloc.VIG  > 0 ? fmt(monthly * alloc.VIG)  : '<span class="dim">—</span>';
+      const jepi = alloc.JEPI > 0 ? fmt(monthly * alloc.JEPI) : '<span class="dim">—</span>';
+      const spyi = alloc.SPYI > 0 ? fmt(monthly * alloc.SPYI) : '<span class="dim">—</span>';
+
+      tr.innerHTML = `
+        <td>Yr ${yr} &middot; ${currentYear + yr - 1}</td>
+        <td>${schd}</td>
+        <td>${dgro}</td>
+        <td>${vig}</td>
+        <td>${jepi}</td>
+        <td>${spyi}</td>
+        <td>${fmtK(portfolioValue)}</td>
+        <td class="income-cell">${fmt(monthlyIncome)}/mo</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  function updateETFCards(monthly, years) {
+    const yr1alloc = getAllocForYear(1, years);
+    ETFS.forEach(etf => {
+      const pct = Math.round(yr1alloc[etf] * 100);
+      const amt = monthly * yr1alloc[etf];
+      const amtEl = document.getElementById(etf.toLowerCase() + '-amount');
+      const pctEl = document.getElementById(etf.toLowerCase() + '-pct');
+      if (amtEl) amtEl.textContent = pct > 0 ? fmt(amt) + '/mo' : '—';
+      if (pctEl) pctEl.textContent = pct + '%';
     });
+
+    const isIncome = yr1alloc.SPYI > 0.1;
+    document.getElementById('phase-label').textContent = isIncome ? 'Income phase' : 'Growth phase';
+
+    if (allocDonut) {
+      allocDonut.data.datasets[0].data = ETFS.map(e => Math.round(yr1alloc[e] * 100));
+      allocDonut.update();
+    }
   }
 
   function updatePlanner() {
@@ -545,22 +625,22 @@
     document.getElementById('out-yield').textContent = yld.toFixed(1) + '%';
 
     const needed = (TARGET_MONTHLY_INC * 12) / (yld / 100);
-    const reached = calcPortfolio(monthly, years, ret);
+    const reached = calcPortfolioAtYear(monthly, years, ret);
     const annualIncome = reached * (yld / 100);
     const monthlyIncome = annualIncome / 12;
     const totalInvested = START + monthly * years * 12;
     const gap = TARGET_MONTHLY_INC - monthlyIncome;
 
-    document.getElementById('m-needed').textContent = fmt(needed);
-    document.getElementById('m-reached').textContent = fmt(reached);
+    document.getElementById('m-needed').textContent = fmtK(needed);
+    document.getElementById('m-reached').textContent = fmtK(reached);
     const incEl = document.getElementById('m-income');
     incEl.textContent = fmt(monthlyIncome) + '/mo';
     incEl.className = 'value ' + (monthlyIncome >= TARGET_MONTHLY_INC ? 'green' : 'warn');
-    document.getElementById('m-invested').textContent = fmt(totalInvested);
+    document.getElementById('m-invested').textContent = fmtK(totalInvested);
 
     document.getElementById('v-monthly').textContent = fmt(monthly) + '/mo';
     document.getElementById('v-years').textContent = years + ' years';
-    document.getElementById('v-port').textContent = fmt(reached);
+    document.getElementById('v-port').textContent = fmtK(reached);
     document.getElementById('v-annual').textContent = fmt(annualIncome) + '/yr';
     document.getElementById('v-monthly-inc').textContent = fmt(monthlyIncome) + '/mo';
     const gapEl = document.getElementById('v-gap');
@@ -573,7 +653,7 @@
     }
 
     const labels = Array.from({length: years + 1}, (_, i) => 'Yr ' + i);
-    const portfolioData = buildYearlyData(monthly, years, ret);
+    const portfolioData = Array.from({length: years + 1}, (_, yr) => calcPortfolioAtYear(monthly, yr, ret));
     const targetLine = Array(years + 1).fill(Math.round(needed));
 
     if (growthChart) {
@@ -584,6 +664,8 @@
     }
 
     updateAllocationChart(years);
+    buildYearTable(monthly, years, ret);
+    updateETFCards(monthly, years);
   }
 
   function updateAllocationChart(years) {
@@ -610,7 +692,17 @@
     }
   }
 
-  function initPlanner() {
+  function setScenario(monthly, years, ret, yld, activeId) {
+    document.getElementById('sl-monthly').value = monthly;
+    document.getElementById('sl-years').value = years;
+    document.getElementById('sl-return').value = ret;
+    document.getElementById('sl-yield').value = yld;
+    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(activeId).classList.add('active');
+    updatePlanner();
+  }
+
+  function init() {
     growthChart = new Chart(document.getElementById('growthChart'), {
       type: 'line',
       data: {
@@ -656,18 +748,8 @@
       data: {
         labels: [],
         datasets: [
-          {
-            label: 'Growth allocation',
-            data: [],
-            backgroundColor: '#7F77DD',
-            stack: 'alloc'
-          },
-          {
-            label: 'Income allocation',
-            data: [],
-            backgroundColor: '#1D9E75',
-            stack: 'alloc'
-          }
+          { label: 'Growth allocation', data: [], backgroundColor: '#7F77DD', stack: 'alloc' },
+          { label: 'Income allocation', data: [], backgroundColor: '#1D9E75', stack: 'alloc' }
         ]
       },
       options: {
@@ -684,23 +766,32 @@
       }
     });
 
+    allocDonut = new Chart(document.getElementById('allocChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ETFS,
+        datasets: [{
+          data: [50, 25, 15, 10, 0],
+          backgroundColor: ETFS.map(e => ETF_COLORS[e]),
+          borderWidth: 2,
+          borderColor: 'transparent'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}%` } }
+        },
+        cutout: '60%'
+      }
+    });
+
     updatePlanner();
   }
 
-  function setScenario(monthly, years, ret, yld, activeId) {
-    document.getElementById('sl-monthly').value = monthly;
-    document.getElementById('sl-years').value = years;
-    document.getElementById('sl-return').value = ret;
-    document.getElementById('sl-yield').value = yld;
-    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(activeId).classList.add('active');
-    updatePlanner();
-  }
-
-  document.getElementById('sl-rotation').addEventListener('change', () => {
-    const years = parseInt(document.getElementById('sl-years').value);
-    updateAllocationChart(years);
-  });
+  document.getElementById('sl-rotation').addEventListener('change', updatePlanner);
 
   ['sl-monthly','sl-years','sl-return','sl-yield'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
@@ -708,6 +799,8 @@
       updatePlanner();
     });
   });
+
+  init();
 </script>
 </body>
 </html>
