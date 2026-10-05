@@ -54,19 +54,46 @@
       padding: 2rem 1rem;
     }
 
-    .container { max-width: 760px; margin: 0 auto; }
+    .container { max-width: 800px; margin: 0 auto; }
 
     header { margin-bottom: 1.5rem; }
     header h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
     header p { font-size: 14px; color: var(--text-secondary); }
 
+    /* Inputs panel */
+    .inputs-panel {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .inputs-panel h2 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
+
+    .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 0.85rem; }
+    .slider-row:last-child { margin-bottom: 0; }
+    .slider-row label { font-size: 13px; color: var(--text-secondary); min-width: 170px; }
+    .slider-row input[type=range] { flex: 1; }
+    .slider-row .readout { font-size: 13px; font-weight: 500; min-width: 88px; text-align: right; }
+
+    .scenario-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+    .scenario-btn {
+      font-size: 13px; padding: 5px 12px;
+      border-radius: var(--radius-md);
+      border: 0.5px solid var(--border);
+      background: var(--bg-secondary);
+      color: var(--text); cursor: pointer;
+    }
+    .scenario-btn:hover { background: var(--bg-secondary); }
+    .scenario-btn.active { border-color: var(--text-info); color: var(--text-info); background: var(--bg-info); }
+
+    /* Metrics */
     .metrics {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 12px;
       margin-bottom: 1.5rem;
     }
-
     .metric-card {
       background: var(--bg);
       border-radius: var(--radius-md);
@@ -74,79 +101,13 @@
       text-align: center;
       border: 0.5px solid var(--border);
     }
-
     .metric-card .label { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
     .metric-card .value { font-size: 22px; font-weight: 500; }
     .metric-card .value.green { color: var(--text-success); }
     .metric-card .value.warn { color: var(--text-warning); }
     .metric-card .value.blue { color: var(--text-info); }
 
-    .holdings { display: grid; gap: 10px; margin-bottom: 1.5rem; }
-
-    .holding-card {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-    }
-
-    .holding-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .holding-left { display: flex; align-items: center; gap: 10px; }
-
-    .badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: var(--radius-md); }
-    .badge-blue { background: var(--bg-info); color: var(--text-info); }
-    .badge-green { background: var(--bg-success); color: var(--text-success); }
-    .badge-amber { background: var(--bg-warning); color: var(--text-warning); }
-
-    .holding-name { font-size: 15px; font-weight: 500; }
-    .holding-right { text-align: right; }
-    .holding-right .amount { font-size: 15px; font-weight: 500; }
-    .holding-right .pct { font-size: 12px; color: var(--text-secondary); }
-
-    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 12px; }
-    .stats .stat-label { color: var(--text-secondary); margin-bottom: 2px; }
-    .stats .stat-val { font-weight: 500; }
-    .stat-val.high { color: var(--text-success); }
-    .stat-val.med { color: var(--text-warning); }
-    .stat-val.low { color: var(--text-danger); }
-
-    .holding-note { font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
-
-    .tax-legend {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.5rem;
-      border: 0.5px solid var(--border);
-    }
-
-    .tax-legend h3 { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
-    .tax-legend ul { list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
-    .tax-legend ul li.high { color: var(--text-success); }
-    .tax-legend ul li.med { color: var(--text-warning); }
-    .tax-legend ul li.low { color: var(--text-danger); }
-    .tax-tip { font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
-
-    .chart-section { margin-bottom: 1.5rem; }
-    .chart-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; }
-    .chart-legend span { display: flex; align-items: center; gap: 4px; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-    .chart-wrap { position: relative; width: 100%; height: 260px; }
-
-    .section-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 10px; margin-top: 1.5rem; }
-    .section-divider { border: none; border-top: 0.5px solid var(--border); margin: 2rem 0 1.5rem; }
-
-    .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
-    .slider-row label { font-size: 13px; color: var(--text-secondary); min-width: 160px; }
-    .slider-row input[type=range] { flex: 1; }
-    .slider-row .readout { font-size: 13px; font-weight: 500; min-width: 80px; text-align: right; }
-
+    /* Verdict */
     .verdict {
       background: var(--bg);
       border: 0.5px solid var(--border);
@@ -154,38 +115,46 @@
       padding: 1rem 1.25rem;
       margin-bottom: 1.5rem;
     }
-
     .verdict-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 13px;
-      padding: 5px 0;
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 13px; padding: 5px 0;
       border-bottom: 0.5px solid var(--border);
     }
-
     .verdict-row:last-child { border-bottom: none; }
     .verdict-row .k { color: var(--text-secondary); }
     .verdict-row .v { font-weight: 500; }
 
+    .section-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 10px; margin-top: 1.5rem; }
+    .section-divider { border: none; border-top: 0.5px solid var(--border); margin: 2rem 0 1.5rem; }
+
+    /* Charts */
+    .chart-wrap { position: relative; width: 100%; }
     .growth-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
     .growth-legend span { display: flex; align-items: center; gap: 4px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
 
-    .scenario-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
-
-    .scenario-btn {
-      font-size: 13px;
-      padding: 6px 14px;
-      border-radius: var(--radius-md);
-      border: 0.5px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      cursor: pointer;
+    /* Year-by-year table */
+    .table-scroll { overflow-x: auto; margin-bottom: 1.5rem; border-radius: var(--radius-lg); border: 0.5px solid var(--border); }
+    table.year-plan { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--bg); }
+    table.year-plan th {
+      background: var(--bg-secondary); font-weight: 500; font-size: 11px;
+      color: var(--text-secondary); padding: 8px 10px;
+      text-align: right; white-space: nowrap;
+      border-bottom: 0.5px solid var(--border);
     }
+    table.year-plan th:first-child { text-align: left; }
+    table.year-plan td {
+      padding: 7px 10px; text-align: right;
+      border-bottom: 0.5px solid var(--border); white-space: nowrap;
+    }
+    table.year-plan td:first-child { text-align: left; font-weight: 500; }
+    table.year-plan tr:last-child td { border-bottom: none; }
+    table.year-plan tr.rotation-row td { background: rgba(29,158,117,0.06); }
+    table.year-plan tr.rotation-row td:first-child::after { content: " ↻"; color: var(--text-success); font-size: 10px; }
+    .dim { color: var(--text-secondary); }
+    .income-cell { color: var(--text-success); font-weight: 500; }
 
-    .scenario-btn:hover { background: var(--bg-secondary); }
-    .scenario-btn.active { border-color: var(--text-info); color: var(--text-info); background: var(--bg-info); }
-
+    /* Rotation toggle */
     .rotation-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .switch { position: relative; display: inline-block; width: 36px; height: 20px; cursor: pointer; flex-shrink: 0; }
     .switch input { opacity: 0; width: 0; height: 0; }
@@ -194,59 +163,69 @@
     .switch input:checked + .switch-track { background: var(--text-info); }
     .switch input:checked + .switch-track .switch-thumb { transform: translateX(16px); }
 
-    /* Year-by-year table */
-    .table-scroll { overflow-x: auto; margin-bottom: 1.5rem; border-radius: var(--radius-lg); border: 0.5px solid var(--border); }
-    table.year-plan { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--bg); }
-    table.year-plan th {
-      background: var(--bg-secondary);
-      font-weight: 500;
-      font-size: 11px;
-      color: var(--text-secondary);
-      padding: 8px 10px;
-      text-align: right;
-      white-space: nowrap;
-      border-bottom: 0.5px solid var(--border);
-    }
-    table.year-plan th:first-child { text-align: left; }
-    table.year-plan td {
-      padding: 7px 10px;
-      text-align: right;
-      border-bottom: 0.5px solid var(--border);
-      white-space: nowrap;
-    }
-    table.year-plan td:first-child { text-align: left; font-weight: 500; }
-    table.year-plan tr:last-child td { border-bottom: none; }
-    table.year-plan tr.rotation-row td { background: rgba(29,158,117,0.06); }
-    table.year-plan tr.rotation-row td:first-child::after {
-      content: " ↻";
-      color: var(--text-success);
-      font-size: 10px;
-    }
-    .dim { color: var(--text-secondary); }
-    .income-cell { color: var(--text-success); font-weight: 500; }
-
-    /* ETF section */
+    /* ETF cards — 4 per row */
     .etf-section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
     }
     .phase-badge {
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: var(--radius-md);
-      background: var(--bg-info);
-      color: var(--text-info);
-      font-weight: 500;
+      font-size: 11px; padding: 3px 10px; border-radius: var(--radius-md);
+      background: var(--bg-info); color: var(--text-info); font-weight: 500;
     }
 
+    .holdings {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 520px) {
+      .holdings { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .holding-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 0.85rem;
+    }
+
+    .badge { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: var(--radius-md); display: inline-block; margin-bottom: 6px; }
+    .badge-blue { background: var(--bg-info); color: var(--text-info); }
+    .badge-green { background: var(--bg-success); color: var(--text-success); }
+    .badge-amber { background: var(--bg-warning); color: var(--text-warning); }
+
+    .holding-name { font-size: 20px; font-weight: 600; line-height: 1.2; margin-bottom: 2px; }
+
+    .holding-meta {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;
+    }
+    .holding-meta .meta-pct { font-size: 13px; font-weight: 500; color: var(--text); }
+
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; font-size: 11px; }
+    .stat-label { color: var(--text-secondary); margin-bottom: 1px; }
+    .stat-val { font-weight: 500; }
+    .stat-val.high { color: var(--text-success); }
+    .stat-val.med { color: var(--text-warning); }
+    .stat-val.low { color: var(--text-danger); }
+
+    .holding-note { font-size: 11px; color: var(--text-secondary); margin-top: 8px; line-height: 1.4; }
+
+    .tax-legend {
+      background: var(--bg-secondary); border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem; margin-bottom: 1.5rem; border: 0.5px solid var(--border);
+    }
+    .tax-legend h3 { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+    .tax-legend ul { list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+    .tax-legend ul li.high { color: var(--text-success); }
+    .tax-legend ul li.med { color: var(--text-warning); }
+    .tax-legend ul li.low { color: var(--text-danger); }
+    .tax-tip { font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
+
     footer {
-      font-size: 12px;
-      color: var(--text-secondary);
+      font-size: 12px; color: var(--text-secondary);
       border-top: 0.5px solid var(--border);
-      padding-top: 1rem;
-      margin-top: 2rem;
+      padding-top: 1rem; margin-top: 2rem;
     }
   </style>
 </head>
@@ -258,7 +237,45 @@
     <p>Goal: $5,000/month &middot; blended income + growth strategy</p>
   </header>
 
-  <!-- GOAL PLANNER -->
+  <!-- 1. INPUTS PANEL — drives everything below -->
+  <div class="inputs-panel">
+    <h2>Adjust your inputs</h2>
+
+    <div class="slider-row">
+      <label for="sl-start">Initial investment</label>
+      <input type="range" id="sl-start" min="1000" max="200000" step="1000" value="20000" />
+      <span class="readout" id="out-start">$20,000</span>
+    </div>
+    <div class="slider-row">
+      <label for="sl-monthly">Monthly contribution</label>
+      <input type="range" id="sl-monthly" min="500" max="15000" step="100" value="2000" />
+      <span class="readout" id="out-monthly">$2,000</span>
+    </div>
+    <div class="slider-row">
+      <label for="sl-years">Target timeline</label>
+      <input type="range" id="sl-years" min="3" max="20" step="1" value="10" />
+      <span class="readout" id="out-years">10 yrs</span>
+    </div>
+    <div class="slider-row">
+      <label for="sl-return">Blended annual return</label>
+      <input type="range" id="sl-return" min="5" max="12" step="0.5" value="8" />
+      <span class="readout" id="out-return">8.0%</span>
+    </div>
+    <div class="slider-row">
+      <label for="sl-yield">Target yield at exit</label>
+      <input type="range" id="sl-yield" min="5" max="12" step="0.5" value="7" />
+      <span class="readout" id="out-yield">7.0%</span>
+    </div>
+
+    <div class="scenario-btns">
+      <span style="font-size:12px;color:var(--text-secondary);align-self:center;">Presets:</span>
+      <button class="scenario-btn" id="sc-aggressive" onclick="setScenario(20000,5000,5,8,7,'sc-aggressive')">Aggressive — 5 yrs</button>
+      <button class="scenario-btn" id="sc-moderate" onclick="setScenario(20000,3000,7,8,7,'sc-moderate')">Moderate — 7 yrs</button>
+      <button class="scenario-btn active" id="sc-conservative" onclick="setScenario(20000,2000,10,8,7,'sc-conservative')">Conservative — 10 yrs</button>
+    </div>
+  </div>
+
+  <!-- 2. METRICS -->
   <div class="metrics">
     <div class="metric-card">
       <div class="label">Portfolio needed</div>
@@ -278,8 +295,9 @@
     </div>
   </div>
 
-  <div class="verdict" id="verdict-box">
-    <div class="verdict-row"><span class="k">Starting balance</span><span class="v">$20,000</span></div>
+  <!-- 3. VERDICT -->
+  <div class="verdict">
+    <div class="verdict-row"><span class="k">Initial investment</span><span class="v" id="v-start">—</span></div>
     <div class="verdict-row"><span class="k">Monthly contribution</span><span class="v" id="v-monthly">—</span></div>
     <div class="verdict-row"><span class="k">Timeline</span><span class="v" id="v-years">—</span></div>
     <div class="verdict-row"><span class="k">Portfolio at end</span><span class="v" id="v-port">—</span></div>
@@ -288,36 +306,7 @@
     <div class="verdict-row"><span class="k">Gap to $5K/month goal</span><span class="v" id="v-gap">—</span></div>
   </div>
 
-  <p class="section-label">Adjust your inputs</p>
-
-  <div class="slider-row">
-    <label for="sl-monthly">Monthly contribution</label>
-    <input type="range" id="sl-monthly" min="500" max="15000" step="100" value="2000" />
-    <span class="readout" id="out-monthly">$2,000</span>
-  </div>
-  <div class="slider-row">
-    <label for="sl-years">Target timeline</label>
-    <input type="range" id="sl-years" min="3" max="20" step="1" value="10" />
-    <span class="readout" id="out-years">10 yrs</span>
-  </div>
-  <div class="slider-row">
-    <label for="sl-return">Blended annual return</label>
-    <input type="range" id="sl-return" min="5" max="12" step="0.5" value="8" />
-    <span class="readout" id="out-return">8.0%</span>
-  </div>
-  <div class="slider-row">
-    <label for="sl-yield">Target yield at exit</label>
-    <input type="range" id="sl-yield" min="5" max="12" step="0.5" value="7" />
-    <span class="readout" id="out-yield">7.0%</span>
-  </div>
-
-  <p class="section-label" style="margin-top: 1.5rem;">Preset scenarios</p>
-  <div class="scenario-btns">
-    <button class="scenario-btn" id="sc-aggressive" onclick="setScenario(5000,5,8,7,'sc-aggressive')">Aggressive — 5 yrs</button>
-    <button class="scenario-btn" id="sc-moderate" onclick="setScenario(3000,7,8,7,'sc-moderate')">Moderate — 7 yrs</button>
-    <button class="scenario-btn active" id="sc-conservative" onclick="setScenario(2000,10,8,7,'sc-conservative')">Conservative — 10 yrs</button>
-  </div>
-
+  <!-- 4. GROWTH CHART -->
   <div class="growth-legend">
     <span><span class="legend-dot" style="background:#185FA5"></span>Portfolio value</span>
     <span style="display:flex;align-items:center;gap:4px;">
@@ -325,14 +314,14 @@
       Target for $5K/mo
     </span>
   </div>
-  <div class="chart-wrap" style="height: 280px; margin-bottom: 1.5rem;">
-    <canvas id="growthChart" role="img" aria-label="Line chart showing portfolio growth over time vs target needed for $5K/month income">Portfolio growth projection.</canvas>
+  <div class="chart-wrap" style="height:280px;margin-bottom:1.5rem;">
+    <canvas id="growthChart"></canvas>
   </div>
 
-  <!-- YEAR-BY-YEAR TABLE -->
+  <!-- 5. YEAR-BY-YEAR TABLE -->
   <p class="section-label">Year-by-year investment plan</p>
-  <p class="holding-note" style="margin-bottom: 12px;">
-    Monthly amounts to invest per ETF based on your contribution and the phase rotation schedule. <span style="color:var(--text-success);">↻ rows</span> are rotation years — allocation shifts toward income funds.
+  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">
+    Monthly amounts to invest per ETF. <span style="color:var(--text-success);">↻ rows</span> = rotation years when allocation shifts toward income funds.
   </p>
   <div class="table-scroll">
     <table class="year-plan">
@@ -352,149 +341,125 @@
     </table>
   </div>
 
-  <!-- TWO-PHASE ROTATION -->
+  <!-- 6. ROTATION -->
   <p class="section-label">Allocation rotation</p>
   <div class="rotation-toggle">
     <label class="switch">
       <input type="checkbox" id="sl-rotation" checked />
       <span class="switch-track"><span class="switch-thumb"></span></span>
     </label>
-    <span style="font-size: 13px;">Shift from growth to income funds in the final <span id="rotation-years-label">2</span> years before goal</span>
+    <span style="font-size:13px;">Shift from growth to income funds in the final <span id="rotation-years-label">2</span> years before goal</span>
   </div>
-  <p class="holding-note" style="margin-bottom: 1rem;">
-    Growth phase (SCHD/DGRO/VIG-heavy) maximizes total return while building the pile. As you approach your target date, the model rotates toward SPYI/JEPI-style income funds to generate the $5,000/month yield.
+  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:1rem;">
+    Growth phase (SCHD/DGRO/VIG-heavy) maximizes total return. Final years rotate toward SPYI/JEPI to generate the $5,000/month yield.
   </p>
-
   <div class="growth-legend">
     <span><span class="legend-dot" style="background:#7F77DD"></span>Growth allocation</span>
     <span><span class="legend-dot" style="background:#1D9E75"></span>Income allocation</span>
   </div>
-  <div class="chart-wrap" style="height: 220px; margin-bottom: 1.5rem;">
-    <canvas id="allocationChart" role="img" aria-label="Stacked bar chart showing allocation shifting from growth funds to income funds in the final years">Allocation rotation over time.</canvas>
+  <div class="chart-wrap" style="height:200px;margin-bottom:1.5rem;">
+    <canvas id="allocationChart"></canvas>
   </div>
 
   <hr class="section-divider" />
 
-  <!-- ETF PICKS (moved from Portfolio blend) -->
+  <!-- 7. ETF PICKS — 4 per row -->
   <div class="etf-section-header">
-    <p class="section-label" style="margin: 0;">ETF picks</p>
+    <p class="section-label" style="margin:0;">ETF picks</p>
     <span class="phase-badge" id="phase-label">Growth phase</span>
   </div>
-  <p class="holding-note" style="margin-bottom: 1rem;">
-    Growth-phase allocation — weighted toward dividend growth and total return. Income funds (SPYI/JEPI-heavy) replace this mix in the final years. Allocations and amounts update with your sliders above.
-  </p>
 
-  <div class="chart-legend" style="margin-bottom: 10px;">
+  <div class="growth-legend" style="margin-bottom:12px;">
     <span><span class="legend-dot" style="background:#185FA5"></span>SCHD</span>
     <span><span class="legend-dot" style="background:#639922"></span>DGRO</span>
     <span><span class="legend-dot" style="background:#7F77DD"></span>VIG</span>
     <span><span class="legend-dot" style="background:#1D9E75"></span>JEPI</span>
     <span><span class="legend-dot" style="background:#E07B39"></span>SPYI</span>
   </div>
-  <div class="chart-wrap" style="height: 220px; margin-bottom: 1.5rem;">
-    <canvas id="allocChart" role="img" aria-label="Doughnut chart showing current ETF allocation mix"></canvas>
+  <div class="chart-wrap" style="height:180px;margin-bottom:1.25rem;">
+    <canvas id="allocChart"></canvas>
   </div>
 
-  <div class="holdings" id="etf-cards">
+  <div class="holdings">
 
-    <div class="holding-card" id="card-SCHD">
-      <div class="holding-header">
-        <div class="holding-left">
-          <span class="badge badge-blue">Growth core</span>
-          <span class="holding-name">SCHD</span>
-        </div>
-        <div class="holding-right">
-          <div class="amount" id="schd-amount">—</div>
-          <div class="pct" id="schd-pct">50%</div>
-        </div>
+    <div class="holding-card">
+      <span class="badge badge-blue">Growth core</span>
+      <div class="holding-name">SCHD</div>
+      <div class="holding-meta">
+        <span class="meta-pct" id="schd-pct">50%</span>
+        <span id="schd-amount">—</span>
       </div>
       <div class="stats">
         <div><div class="stat-label">Yield</div><div class="stat-val">3.5%</div></div>
-        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
-        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+        <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
         <div><div class="stat-label">Phase</div><div class="stat-val">Both</div></div>
       </div>
-      <p class="holding-note">Qualified dividends (0–20% LTCG rate). Dividend growth ~10%/yr. Core compounder in both phases.</p>
+      <p class="holding-note">Qualified dividends. Core compounder, ~10%/yr dividend growth.</p>
     </div>
 
-    <div class="holding-card" id="card-DGRO">
-      <div class="holding-header">
-        <div class="holding-left">
-          <span class="badge badge-blue">Growth core</span>
-          <span class="holding-name">DGRO</span>
-        </div>
-        <div class="holding-right">
-          <div class="amount" id="dgro-amount">—</div>
-          <div class="pct" id="dgro-pct">25%</div>
-        </div>
+    <div class="holding-card">
+      <span class="badge badge-blue">Growth core</span>
+      <div class="holding-name">DGRO</div>
+      <div class="holding-meta">
+        <span class="meta-pct" id="dgro-pct">25%</span>
+        <span id="dgro-amount">—</span>
       </div>
       <div class="stats">
         <div><div class="stat-label">Yield</div><div class="stat-val">2.5%</div></div>
-        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
-        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
+        <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
         <div><div class="stat-label">Phase</div><div class="stat-val">Both</div></div>
       </div>
-      <p class="holding-note">Broader tech + healthcare exposure. Complements SCHD with quality growth screen.</p>
+      <p class="holding-note">Quality growth screen. Broader tech + healthcare exposure.</p>
     </div>
 
-    <div class="holding-card" id="card-VIG">
-      <div class="holding-header">
-        <div class="holding-left">
-          <span class="badge badge-blue">Growth core</span>
-          <span class="holding-name">VIG</span>
-        </div>
-        <div class="holding-right">
-          <div class="amount" id="vig-amount">—</div>
-          <div class="pct" id="vig-pct">15%</div>
-        </div>
+    <div class="holding-card">
+      <span class="badge badge-blue">Growth core</span>
+      <div class="holding-name">VIG</div>
+      <div class="holding-meta">
+        <span class="meta-pct" id="vig-pct">15%</span>
+        <span id="vig-amount">—</span>
       </div>
       <div class="stats">
         <div><div class="stat-label">Yield</div><div class="stat-val">1.8%</div></div>
-        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
-        <div><div class="stat-label">Payout</div><div class="stat-val">Quarterly</div></div>
-        <div><div class="stat-label">Phase</div><div class="stat-val">Growth only</div></div>
+        <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
+        <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
+        <div><div class="stat-label">Phase</div><div class="stat-val">Growth</div></div>
       </div>
-      <p class="holding-note">10+ years of consecutive dividend growth. Dividend Aristocrat stability. Exited in income phase.</p>
+      <p class="holding-note">10+ yrs consecutive dividend growth. Aristocrat stability.</p>
     </div>
 
-    <div class="holding-card" id="card-JEPI">
-      <div class="holding-header">
-        <div class="holding-left">
-          <span class="badge badge-green">Income</span>
-          <span class="holding-name">JEPI</span>
-        </div>
-        <div class="holding-right">
-          <div class="amount" id="jepi-amount">—</div>
-          <div class="pct" id="jepi-pct">10%</div>
-        </div>
+    <div class="holding-card">
+      <span class="badge badge-green">Income</span>
+      <div class="holding-name">JEPI</div>
+      <div class="holding-meta">
+        <span class="meta-pct" id="jepi-pct">10%</span>
+        <span id="jepi-amount">—</span>
       </div>
       <div class="stats">
         <div><div class="stat-label">Yield</div><div class="stat-val">7–8%</div></div>
-        <div><div class="stat-label">Tax efficiency</div><div class="stat-val med">Medium ★★☆</div></div>
+        <div><div class="stat-label">Tax</div><div class="stat-val med">★★☆</div></div>
         <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
         <div><div class="stat-label">Phase</div><div class="stat-val">Both</div></div>
       </div>
-      <p class="holding-note">Light income stabilizer in growth phase (10%). Grows to 25% in income phase. Less upside-capped than SPYI.</p>
+      <p class="holding-note">Light stabilizer in growth (10%). Grows to 25% in income phase.</p>
     </div>
 
-    <div class="holding-card" id="card-SPYI">
-      <div class="holding-header">
-        <div class="holding-left">
-          <span class="badge badge-amber">Income phase</span>
-          <span class="holding-name">SPYI</span>
-        </div>
-        <div class="holding-right">
-          <div class="amount" id="spyi-amount">—</div>
-          <div class="pct" id="spyi-pct">0%</div>
-        </div>
+    <div class="holding-card">
+      <span class="badge badge-amber">Income phase</span>
+      <div class="holding-name">SPYI</div>
+      <div class="holding-meta">
+        <span class="meta-pct" id="spyi-pct">0%</span>
+        <span id="spyi-amount">—</span>
       </div>
       <div class="stats">
         <div><div class="stat-label">Yield</div><div class="stat-val">11–12%</div></div>
-        <div><div class="stat-label">Tax efficiency</div><div class="stat-val high">High ★★★</div></div>
+        <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
         <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
-        <div><div class="stat-label">Phase</div><div class="stat-val">Income only</div></div>
+        <div><div class="stat-label">Phase</div><div class="stat-val">Income</div></div>
       </div>
-      <p class="holding-note">Section 1256 (60% LTCG / 40% ordinary). 40% of income phase. Not used during accumulation — covered-call overlay caps growth upside.</p>
+      <p class="holding-note">Sec. 1256 (60% LTCG). 40% of income phase. Skip during accumulation.</p>
     </div>
 
   </div>
@@ -510,193 +475,176 @@
   </div>
 
   <footer>
-    <p>Disclaimer: this is educational content, not personalized financial advice. Yields fluctuate and past performance does not guarantee future results. Consult a fee-only financial advisor before investing.</p>
+    <p>Disclaimer: educational content only, not personalized financial advice. Yields fluctuate; past performance does not guarantee future results. Consult a fee-only financial advisor before investing.</p>
   </footer>
 
 </div>
 <script>
-  const START = 20000;
   const TARGET_MONTHLY_INC = 5000;
   const ROTATION_YEARS = 2;
 
-  const ETF_GROWTH = { SCHD: 0.50, DGRO: 0.25, VIG: 0.15, JEPI: 0.10, SPYI: 0.00 };
-  const ETF_INCOME = { SCHD: 0.25, DGRO: 0.10, VIG: 0.00, JEPI: 0.25, SPYI: 0.40 };
-  const ETF_YIELDS = { SCHD: 0.035, DGRO: 0.025, VIG: 0.018, JEPI: 0.075, SPYI: 0.11 };
-  const ETF_COLORS = { SCHD: '#185FA5', DGRO: '#639922', VIG: '#7F77DD', JEPI: '#1D9E75', SPYI: '#E07B39' };
+  const ETF_GROWTH  = { SCHD: 0.50, DGRO: 0.25, VIG: 0.15, JEPI: 0.10, SPYI: 0.00 };
+  const ETF_INCOME  = { SCHD: 0.25, DGRO: 0.10, VIG: 0.00, JEPI: 0.25, SPYI: 0.40 };
+  const ETF_YIELDS  = { SCHD: 0.035, DGRO: 0.025, VIG: 0.018, JEPI: 0.075, SPYI: 0.11 };
+  const ETF_COLORS  = { SCHD: '#185FA5', DGRO: '#639922', VIG: '#7F77DD', JEPI: '#1D9E75', SPYI: '#E07B39' };
   const ETFS = ['SCHD', 'DGRO', 'VIG', 'JEPI', 'SPYI'];
 
-  let growthChart = null;
-  let allocationChart = null;
-  let allocDonut = null;
+  let growthChart = null, allocationChart = null, allocDonut = null;
 
-  function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+  function getStart()   { return parseInt(document.getElementById('sl-start').value); }
+  function getMonthly() { return parseInt(document.getElementById('sl-monthly').value); }
+  function getYears()   { return parseInt(document.getElementById('sl-years').value); }
+  function getRet()     { return parseFloat(document.getElementById('sl-return').value); }
+  function getYld()     { return parseFloat(document.getElementById('sl-yield').value); }
+
+  function fmt(n)  { return '$' + Math.round(n).toLocaleString(); }
   function fmtK(n) { return n >= 1000000 ? '$' + (n/1000000).toFixed(2) + 'M' : '$' + (n/1000).toFixed(0) + 'K'; }
 
   function getAllocForYear(yr, years) {
     const rotationOn = document.getElementById('sl-rotation').checked;
-    const rotYears = Math.min(ROTATION_YEARS, years);
-    const yearsFromGoal = years - yr;
-    if (!rotationOn || yearsFromGoal > rotYears) return { ...ETF_GROWTH };
-    if (yearsFromGoal <= 0) return { ...ETF_INCOME };
-    const progress = 1 - (yearsFromGoal / rotYears);
-    const result = {};
-    ETFS.forEach(etf => {
-      result[etf] = ETF_GROWTH[etf] + progress * (ETF_INCOME[etf] - ETF_GROWTH[etf]);
-    });
-    return result;
+    const rotYrs = Math.min(ROTATION_YEARS, years);
+    const fromGoal = years - yr;
+    if (!rotationOn || fromGoal > rotYrs) return { ...ETF_GROWTH };
+    if (fromGoal <= 0) return { ...ETF_INCOME };
+    const p = 1 - (fromGoal / rotYrs);
+    const r = {};
+    ETFS.forEach(e => { r[e] = ETF_GROWTH[e] + p * (ETF_INCOME[e] - ETF_GROWTH[e]); });
+    return r;
   }
 
-  function getBlendedYield(alloc) {
-    return ETFS.reduce((sum, etf) => sum + alloc[etf] * ETF_YIELDS[etf], 0);
+  function blendedYield(alloc) {
+    return ETFS.reduce((s, e) => s + alloc[e] * ETF_YIELDS[e], 0);
   }
 
-  function calcPortfolioAtYear(monthly, yr, annualReturn) {
-    const r = annualReturn / 100 / 12;
-    const n = yr * 12;
-    return START * Math.pow(1 + r, n) + monthly * (Math.pow(1 + r, n) - 1) / r;
+  function portfolioAt(start, monthly, yr, ret) {
+    const r = ret / 100 / 12, n = yr * 12;
+    return start * Math.pow(1+r, n) + monthly * (Math.pow(1+r, n) - 1) / r;
   }
 
-  function buildYearTable(monthly, years, annualReturn) {
+  function buildYearTable(start, monthly, years, ret) {
     const tbody = document.getElementById('year-plan-body');
     tbody.innerHTML = '';
-    const currentYear = new Date().getFullYear();
-    const rotYears = Math.min(ROTATION_YEARS, years);
+    const curYear = new Date().getFullYear();
+    const rotYrs = Math.min(ROTATION_YEARS, years);
 
     for (let yr = 1; yr <= years; yr++) {
       const alloc = getAllocForYear(yr, years);
-      const portfolioValue = calcPortfolioAtYear(monthly, yr, annualReturn);
-      const blendedYield = getBlendedYield(alloc);
-      const monthlyIncome = portfolioValue * blendedYield / 12;
-      const yearsFromGoal = years - yr;
-      const isRotation = document.getElementById('sl-rotation').checked && yearsFromGoal < rotYears && yearsFromGoal >= 0;
+      const pv = portfolioAt(start, monthly, yr, ret);
+      const income = pv * blendedYield(alloc) / 12;
+      const fromGoal = years - yr;
+      const isRot = document.getElementById('sl-rotation').checked && fromGoal < rotYrs && fromGoal >= 0;
+
+      const cell = (etf) => alloc[etf] > 0.005
+        ? fmt(monthly * alloc[etf])
+        : '<span class="dim">—</span>';
 
       const tr = document.createElement('tr');
-      if (isRotation) tr.className = 'rotation-row';
-
-      const schd = alloc.SCHD > 0 ? fmt(monthly * alloc.SCHD) : '<span class="dim">—</span>';
-      const dgro = alloc.DGRO > 0 ? fmt(monthly * alloc.DGRO) : '<span class="dim">—</span>';
-      const vig  = alloc.VIG  > 0 ? fmt(monthly * alloc.VIG)  : '<span class="dim">—</span>';
-      const jepi = alloc.JEPI > 0 ? fmt(monthly * alloc.JEPI) : '<span class="dim">—</span>';
-      const spyi = alloc.SPYI > 0 ? fmt(monthly * alloc.SPYI) : '<span class="dim">—</span>';
-
+      if (isRot) tr.className = 'rotation-row';
       tr.innerHTML = `
-        <td>Yr ${yr} &middot; ${currentYear + yr - 1}</td>
-        <td>${schd}</td>
-        <td>${dgro}</td>
-        <td>${vig}</td>
-        <td>${jepi}</td>
-        <td>${spyi}</td>
-        <td>${fmtK(portfolioValue)}</td>
-        <td class="income-cell">${fmt(monthlyIncome)}/mo</td>
-      `;
+        <td>Yr ${yr} &middot; ${curYear + yr - 1}</td>
+        <td>${cell('SCHD')}</td><td>${cell('DGRO')}</td>
+        <td>${cell('VIG')}</td><td>${cell('JEPI')}</td>
+        <td>${cell('SPYI')}</td>
+        <td>${fmtK(pv)}</td>
+        <td class="income-cell">${fmt(income)}/mo</td>`;
       tbody.appendChild(tr);
     }
   }
 
   function updateETFCards(monthly, years) {
-    const yr1alloc = getAllocForYear(1, years);
-    ETFS.forEach(etf => {
-      const pct = Math.round(yr1alloc[etf] * 100);
-      const amt = monthly * yr1alloc[etf];
-      const amtEl = document.getElementById(etf.toLowerCase() + '-amount');
-      const pctEl = document.getElementById(etf.toLowerCase() + '-pct');
-      if (amtEl) amtEl.textContent = pct > 0 ? fmt(amt) + '/mo' : '—';
+    const alloc = getAllocForYear(1, years);
+    ETFS.forEach(e => {
+      const pct = Math.round(alloc[e] * 100);
+      const amtEl = document.getElementById(e.toLowerCase() + '-amount');
+      const pctEl = document.getElementById(e.toLowerCase() + '-pct');
+      if (amtEl) amtEl.textContent = pct > 0 ? fmt(monthly * alloc[e]) + '/mo' : '—';
       if (pctEl) pctEl.textContent = pct + '%';
     });
-
-    const isIncome = yr1alloc.SPYI > 0.1;
-    document.getElementById('phase-label').textContent = isIncome ? 'Income phase' : 'Growth phase';
-
+    document.getElementById('phase-label').textContent = alloc.SPYI > 0.1 ? 'Income phase' : 'Growth phase';
     if (allocDonut) {
-      allocDonut.data.datasets[0].data = ETFS.map(e => Math.round(yr1alloc[e] * 100));
+      allocDonut.data.datasets[0].data = ETFS.map(e => Math.round(alloc[e] * 100));
       allocDonut.update();
     }
   }
 
   function updatePlanner() {
-    const monthly = parseInt(document.getElementById('sl-monthly').value);
-    const years = parseInt(document.getElementById('sl-years').value);
-    const ret = parseFloat(document.getElementById('sl-return').value);
-    const yld = parseFloat(document.getElementById('sl-yield').value);
+    const start = getStart(), monthly = getMonthly(), years = getYears(),
+          ret = getRet(), yld = getYld();
 
+    document.getElementById('out-start').textContent   = fmt(start);
     document.getElementById('out-monthly').textContent = fmt(monthly);
-    document.getElementById('out-years').textContent = years + ' yrs';
-    document.getElementById('out-return').textContent = ret.toFixed(1) + '%';
-    document.getElementById('out-yield').textContent = yld.toFixed(1) + '%';
+    document.getElementById('out-years').textContent   = years + ' yrs';
+    document.getElementById('out-return').textContent  = ret.toFixed(1) + '%';
+    document.getElementById('out-yield').textContent   = yld.toFixed(1) + '%';
 
-    const needed = (TARGET_MONTHLY_INC * 12) / (yld / 100);
-    const reached = calcPortfolioAtYear(monthly, years, ret);
-    const annualIncome = reached * (yld / 100);
-    const monthlyIncome = annualIncome / 12;
-    const totalInvested = START + monthly * years * 12;
-    const gap = TARGET_MONTHLY_INC - monthlyIncome;
+    const needed  = (TARGET_MONTHLY_INC * 12) / (yld / 100);
+    const reached = portfolioAt(start, monthly, years, ret);
+    const annInc  = reached * (yld / 100);
+    const moInc   = annInc / 12;
+    const totalInv = start + monthly * years * 12;
+    const gap = TARGET_MONTHLY_INC - moInc;
 
-    document.getElementById('m-needed').textContent = fmtK(needed);
+    document.getElementById('m-needed').textContent  = fmtK(needed);
     document.getElementById('m-reached').textContent = fmtK(reached);
     const incEl = document.getElementById('m-income');
-    incEl.textContent = fmt(monthlyIncome) + '/mo';
-    incEl.className = 'value ' + (monthlyIncome >= TARGET_MONTHLY_INC ? 'green' : 'warn');
-    document.getElementById('m-invested').textContent = fmtK(totalInvested);
+    incEl.textContent = fmt(moInc) + '/mo';
+    incEl.className   = 'value ' + (moInc >= TARGET_MONTHLY_INC ? 'green' : 'warn');
+    document.getElementById('m-invested').textContent = fmtK(totalInv);
 
-    document.getElementById('v-monthly').textContent = fmt(monthly) + '/mo';
-    document.getElementById('v-years').textContent = years + ' years';
-    document.getElementById('v-port').textContent = fmtK(reached);
-    document.getElementById('v-annual').textContent = fmt(annualIncome) + '/yr';
-    document.getElementById('v-monthly-inc').textContent = fmt(monthlyIncome) + '/mo';
+    document.getElementById('v-start').textContent      = fmt(start);
+    document.getElementById('v-monthly').textContent    = fmt(monthly) + '/mo';
+    document.getElementById('v-years').textContent      = years + ' years';
+    document.getElementById('v-port').textContent       = fmtK(reached);
+    document.getElementById('v-annual').textContent     = fmt(annInc) + '/yr';
+    document.getElementById('v-monthly-inc').textContent = fmt(moInc) + '/mo';
     const gapEl = document.getElementById('v-gap');
     if (gap <= 0) {
-      gapEl.textContent = 'Goal reached! +' + fmt(Math.abs(gap)) + '/mo';
-      gapEl.style.color = 'var(--text-success)';
+      gapEl.textContent  = 'Goal reached! +' + fmt(Math.abs(gap)) + '/mo';
+      gapEl.style.color  = 'var(--text-success)';
     } else {
-      gapEl.textContent = '-' + fmt(gap) + '/mo short';
-      gapEl.style.color = 'var(--text-danger)';
+      gapEl.textContent  = '-' + fmt(gap) + '/mo short';
+      gapEl.style.color  = 'var(--text-danger)';
     }
 
-    const labels = Array.from({length: years + 1}, (_, i) => 'Yr ' + i);
-    const portfolioData = Array.from({length: years + 1}, (_, yr) => calcPortfolioAtYear(monthly, yr, ret));
-    const targetLine = Array(years + 1).fill(Math.round(needed));
+    const labels  = Array.from({length: years+1}, (_,i) => 'Yr '+i);
+    const portData = Array.from({length: years+1}, (_,yr) => portfolioAt(start, monthly, yr, ret));
+    const target  = Array(years+1).fill(Math.round(needed));
 
     if (growthChart) {
       growthChart.data.labels = labels;
-      growthChart.data.datasets[0].data = portfolioData;
-      growthChart.data.datasets[1].data = targetLine;
+      growthChart.data.datasets[0].data = portData;
+      growthChart.data.datasets[1].data = target;
       growthChart.update();
     }
 
-    updateAllocationChart(years);
-    buildYearTable(monthly, years, ret);
-    updateETFCards(monthly, years);
-  }
-
-  function updateAllocationChart(years) {
-    const rotationOn = document.getElementById('sl-rotation').checked;
-    const rotYears = Math.min(ROTATION_YEARS, years);
-    document.getElementById('rotation-years-label').textContent = rotYears;
-
-    const labels = Array.from({length: years + 1}, (_, i) => 'Yr ' + i);
-    const incomePct = labels.map((_, yr) => {
-      if (!rotationOn) return 30;
-      const yearsFromGoal = years - yr;
-      if (yearsFromGoal > rotYears) return 30;
-      if (yearsFromGoal <= 0) return 80;
-      const progress = 1 - (yearsFromGoal / rotYears);
-      return Math.round(30 + progress * 50);
+    // allocation rotation chart
+    const rotYrs = Math.min(ROTATION_YEARS, years);
+    document.getElementById('rotation-years-label').textContent = rotYrs;
+    const rotOn = document.getElementById('sl-rotation').checked;
+    const incomePct = labels.map((_,yr) => {
+      if (!rotOn) return 30;
+      const fg = years - yr;
+      if (fg > rotYrs) return 30;
+      if (fg <= 0) return 80;
+      return Math.round(30 + (1 - fg/rotYrs) * 50);
     });
-    const growthPct = incomePct.map(p => 100 - p);
-
     if (allocationChart) {
       allocationChart.data.labels = labels;
-      allocationChart.data.datasets[0].data = growthPct;
+      allocationChart.data.datasets[0].data = incomePct.map(p => 100-p);
       allocationChart.data.datasets[1].data = incomePct;
       allocationChart.update();
     }
+
+    buildYearTable(start, monthly, years, ret);
+    updateETFCards(monthly, years);
   }
 
-  function setScenario(monthly, years, ret, yld, activeId) {
+  function setScenario(start, monthly, years, ret, yld, activeId) {
+    document.getElementById('sl-start').value   = start;
     document.getElementById('sl-monthly').value = monthly;
-    document.getElementById('sl-years').value = years;
-    document.getElementById('sl-return').value = ret;
-    document.getElementById('sl-yield').value = yld;
+    document.getElementById('sl-years').value   = years;
+    document.getElementById('sl-return').value  = ret;
+    document.getElementById('sl-yield').value   = yld;
     document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(activeId).classList.add('active');
     updatePlanner();
@@ -705,85 +653,45 @@
   function init() {
     growthChart = new Chart(document.getElementById('growthChart'), {
       type: 'line',
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: 'Portfolio value',
-            data: [],
-            borderColor: '#185FA5',
-            backgroundColor: 'rgba(24,95,165,0.08)',
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            borderWidth: 2
-          },
-          {
-            label: 'Target for $5K/mo',
-            data: [],
-            borderColor: '#639922',
-            borderDash: [6, 4],
-            borderWidth: 2,
-            pointRadius: 0,
-            fill: false
-          }
-        ]
-      },
+      data: { labels: [], datasets: [
+        { label: 'Portfolio value', data: [], borderColor: '#185FA5',
+          backgroundColor: 'rgba(24,95,165,0.08)', fill: true, tension: 0.3,
+          pointRadius: 3, borderWidth: 2 },
+        { label: 'Target', data: [], borderColor: '#639922',
+          borderDash: [6,4], borderWidth: 2, pointRadius: 0, fill: false }
+      ]},
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: {
-          y: {
-            ticks: {
-              callback: v => v >= 1000000 ? '$' + (v/1000000).toFixed(1) + 'M' : '$' + (v/1000).toFixed(0) + 'K'
-            }
-          }
-        }
+        scales: { y: { ticks: { callback: v => v >= 1e6 ? '$'+(v/1e6).toFixed(1)+'M' : '$'+(v/1000).toFixed(0)+'K' } } }
       }
     });
 
     allocationChart = new Chart(document.getElementById('allocationChart'), {
       type: 'bar',
-      data: {
-        labels: [],
-        datasets: [
-          { label: 'Growth allocation', data: [], backgroundColor: '#7F77DD', stack: 'alloc' },
-          { label: 'Income allocation', data: [], backgroundColor: '#1D9E75', stack: 'alloc' }
-        ]
-      },
+      data: { labels: [], datasets: [
+        { label: 'Growth', data: [], backgroundColor: '#7F77DD', stack: 'a' },
+        { label: 'Income', data: [], backgroundColor: '#1D9E75', stack: 'a' }
+      ]},
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
-        },
-        scales: {
-          x: { stacked: true },
-          y: { stacked: true, min: 0, max: 100, ticks: { callback: v => v + '%' } }
-        }
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } } },
+        scales: { x: { stacked: true }, y: { stacked: true, min: 0, max: 100, ticks: { callback: v => v+'%' } } }
       }
     });
 
     allocDonut = new Chart(document.getElementById('allocChart'), {
       type: 'doughnut',
-      data: {
-        labels: ETFS,
-        datasets: [{
-          data: [50, 25, 15, 10, 0],
-          backgroundColor: ETFS.map(e => ETF_COLORS[e]),
-          borderWidth: 2,
-          borderColor: 'transparent'
-        }]
-      },
+      data: { labels: ETFS, datasets: [{
+        data: [50,25,15,10,0],
+        backgroundColor: ETFS.map(e => ETF_COLORS[e]),
+        borderWidth: 2, borderColor: 'transparent'
+      }]},
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}%` } }
-        },
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}%` } } },
         cutout: '60%'
       }
     });
@@ -792,8 +700,7 @@
   }
 
   document.getElementById('sl-rotation').addEventListener('change', updatePlanner);
-
-  ['sl-monthly','sl-years','sl-return','sl-yield'].forEach(id => {
+  ['sl-start','sl-monthly','sl-years','sl-return','sl-yield'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
       document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
       updatePlanner();
