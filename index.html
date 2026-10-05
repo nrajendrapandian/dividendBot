@@ -26,174 +26,158 @@
       --radius-md: 8px;
       --radius-lg: 12px;
     }
-
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #1c1c1a;
-        --bg-secondary: #2a2a27;
-        --bg-success: #173404;
-        --bg-warning: #412402;
-        --bg-danger: #501313;
-        --bg-info: #042c53;
-        --text: #f0ede6;
-        --text-secondary: #b4b2a9;
-        --text-success: #c0dd97;
-        --text-warning: #fac775;
-        --text-danger: #f7c1c1;
-        --text-info: #b5d4f4;
-        --border: rgba(255,255,255,0.12);
+        --bg:#1c1c1a; --bg-secondary:#2a2a27; --bg-success:#173404;
+        --bg-warning:#412402; --bg-danger:#501313; --bg-info:#042c53;
+        --text:#f0ede6; --text-secondary:#b4b2a9; --text-success:#c0dd97;
+        --text-warning:#fac775; --text-danger:#f7c1c1; --text-info:#b5d4f4;
+        --border:rgba(255,255,255,0.12);
       }
     }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg-secondary);
-      color: var(--text);
-      font-size: 16px;
-      line-height: 1.6;
-      padding: 2rem 1rem;
+    body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg-secondary); color:var(--text); font-size:16px; line-height:1.6; padding:2rem 1rem; }
+    .container { max-width:800px; margin:0 auto; }
+    header { margin-bottom:1.5rem; }
+    header h1 { font-size:22px; font-weight:500; margin-bottom:4px; }
+    header p  { font-size:14px; color:var(--text-secondary); }
+
+    /* Intent question */
+    .intent-question { font-size:14px; font-weight:500; margin-bottom:10px; }
+    .intent-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1.5rem; }
+    @media(max-width:520px){ .intent-cards { grid-template-columns:1fr; } }
+
+    .intent-card {
+      background:var(--bg); border:1.5px solid var(--border);
+      border-radius:var(--radius-lg); padding:1rem; cursor:pointer;
+      transition:border-color 0.15s, background 0.15s;
     }
+    .intent-card:hover { border-color: var(--text-secondary); }
+    .intent-card.selected-spend  { border-color:#E07B39; background:rgba(224,123,57,0.06); }
+    .intent-card.selected-legacy { border-color:#185FA5; background:rgba(24,95,165,0.06); }
+    .intent-card.selected-hybrid { border-color:#27500a; background:rgba(39,80,10,0.06); }
 
-    .container { max-width: 800px; margin: 0 auto; }
+    .intent-card .i-title { font-size:14px; font-weight:600; margin-bottom:4px; }
+    .intent-card.selected-spend  .i-title { color:#E07B39; }
+    .intent-card.selected-legacy .i-title { color:#185FA5; }
+    .intent-card.selected-hybrid .i-title { color:var(--text-success); }
+    .intent-card .i-desc  { font-size:12px; color:var(--text-secondary); margin-bottom:10px; line-height:1.4; }
+    .intent-card .i-stats { font-size:11px; display:flex; flex-direction:column; gap:3px; }
+    .intent-card .i-row   { display:flex; justify-content:space-between; }
+    .intent-card .i-label { color:var(--text-secondary); }
+    .intent-card .i-val   { font-weight:500; }
 
-    header { margin-bottom: 1.5rem; }
-    header h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
-    header p { font-size: 14px; color: var(--text-secondary); }
-
-    /* Inputs panel */
-    .inputs-panel {
-      background: var(--bg); border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.5rem;
-    }
-    .inputs-panel h2 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
-    .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 0.85rem; }
-    .slider-row:last-child { margin-bottom: 0; }
-    .slider-row label { font-size: 13px; color: var(--text-secondary); min-width: 170px; }
-    .slider-row input[type=range] { flex: 1; }
-    .slider-row .readout { font-size: 13px; font-weight: 500; min-width: 88px; text-align: right; }
-    .scenario-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
-    .scenario-btn { font-size: 13px; padding: 5px 12px; border-radius: var(--radius-md); border: 0.5px solid var(--border); background: var(--bg-secondary); color: var(--text); cursor: pointer; }
-    .scenario-btn.active { border-color: var(--text-info); color: var(--text-info); background: var(--bg-info); }
+    /* Inputs */
+    .inputs-panel { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:1.25rem; margin-bottom:1.5rem; }
+    .inputs-panel h2 { font-size:14px; font-weight:500; margin-bottom:1rem; }
+    .slider-row { display:flex; align-items:center; gap:12px; margin-bottom:0.85rem; }
+    .slider-row:last-child { margin-bottom:0; }
+    .slider-row label { font-size:13px; color:var(--text-secondary); min-width:170px; }
+    .slider-row input[type=range] { flex:1; }
+    .slider-row .readout { font-size:13px; font-weight:500; min-width:88px; text-align:right; }
+    .scenario-btns { display:flex; flex-wrap:wrap; gap:8px; margin-top:1rem; padding-top:1rem; border-top:0.5px solid var(--border); }
+    .scenario-btn { font-size:13px; padding:5px 12px; border-radius:var(--radius-md); border:0.5px solid var(--border); background:var(--bg-secondary); color:var(--text); cursor:pointer; }
+    .scenario-btn.active { border-color:var(--text-info); color:var(--text-info); background:var(--bg-info); }
 
     /* Metrics */
-    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
-    .metric-card { background: var(--bg); border-radius: var(--radius-md); padding: 1rem; text-align: center; border: 0.5px solid var(--border); }
-    .metric-card .label { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
-    .metric-card .value { font-size: 22px; font-weight: 500; }
-    .metric-card .value.green { color: var(--text-success); }
-    .metric-card .value.warn { color: var(--text-warning); }
-    .metric-card .value.blue { color: var(--text-info); }
+    .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:1.5rem; }
+    .metric-card { background:var(--bg); border-radius:var(--radius-md); padding:1rem; text-align:center; border:0.5px solid var(--border); }
+    .metric-card .label { font-size:13px; color:var(--text-secondary); margin-bottom:4px; }
+    .metric-card .value { font-size:22px; font-weight:500; }
+    .metric-card .value.green { color:var(--text-success); }
+    .metric-card .value.warn  { color:var(--text-warning); }
+    .metric-card .value.blue  { color:var(--text-info); }
 
     /* Verdict */
-    .verdict { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
-    .verdict-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; padding: 5px 0; border-bottom: 0.5px solid var(--border); }
-    .verdict-row:last-child { border-bottom: none; }
-    .verdict-row .k { color: var(--text-secondary); }
-    .verdict-row .v { font-weight: 500; }
+    .verdict { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:1rem 1.25rem; margin-bottom:1.5rem; }
+    .verdict-row { display:flex; justify-content:space-between; align-items:baseline; font-size:13px; padding:5px 0; border-bottom:0.5px solid var(--border); }
+    .verdict-row:last-child { border-bottom:none; }
+    .verdict-row .k { color:var(--text-secondary); }
+    .verdict-row .v { font-weight:500; }
 
-    .section-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 10px; margin-top: 1.5rem; }
-    .section-divider { border: none; border-top: 0.5px solid var(--border); margin: 2rem 0 1.5rem; }
+    .section-label { font-size:13px; font-weight:500; color:var(--text-secondary); margin-bottom:10px; margin-top:1.5rem; }
+    .section-divider { border:none; border-top:0.5px solid var(--border); margin:2rem 0 1.5rem; }
 
     /* Charts */
-    .chart-wrap { position: relative; width: 100%; }
-    .growth-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
-    .growth-legend span { display: flex; align-items: center; gap: 4px; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .chart-wrap { position:relative; width:100%; }
+    .chart-legend { display:flex; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--text-secondary); margin-bottom:8px; }
+    .chart-legend span { display:flex; align-items:center; gap:4px; }
+    .legend-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
 
     /* Year table */
-    .table-scroll { overflow-x: auto; margin-bottom: 1.5rem; border-radius: var(--radius-lg); border: 0.5px solid var(--border); }
-    table.year-plan { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--bg); }
-    table.year-plan th { background: var(--bg-secondary); font-weight: 500; font-size: 11px; color: var(--text-secondary); padding: 8px 10px; text-align: right; white-space: nowrap; border-bottom: 0.5px solid var(--border); }
-    table.year-plan th:first-child { text-align: left; }
-    table.year-plan td { padding: 7px 10px; text-align: right; border-bottom: 0.5px solid var(--border); white-space: nowrap; }
-    table.year-plan td:first-child { text-align: left; font-weight: 500; }
-    table.year-plan tr:last-child td { border-bottom: none; }
-    table.year-plan tr.rotation-row td { background: rgba(29,158,117,0.06); }
-    table.year-plan tr.rotation-row td:first-child::after { content: " ↻"; color: var(--text-success); font-size: 10px; }
-    .dim { color: var(--text-secondary); }
-    .income-cell { color: var(--text-success); font-weight: 500; }
+    .table-scroll { overflow-x:auto; margin-bottom:1.5rem; border-radius:var(--radius-lg); border:0.5px solid var(--border); }
+    table.year-plan { width:100%; border-collapse:collapse; font-size:12px; background:var(--bg); }
+    table.year-plan th { background:var(--bg-secondary); font-weight:500; font-size:11px; color:var(--text-secondary); padding:8px 10px; text-align:right; white-space:nowrap; border-bottom:0.5px solid var(--border); }
+    table.year-plan th:first-child { text-align:left; }
+    table.year-plan td { padding:7px 10px; text-align:right; border-bottom:0.5px solid var(--border); white-space:nowrap; }
+    table.year-plan td:first-child { text-align:left; font-weight:500; }
+    table.year-plan tr:last-child td { border-bottom:none; }
+    table.year-plan tr.rotation-row td { background:rgba(29,158,117,0.06); }
+    table.year-plan tr.rotation-row td:first-child::after { content:" ↻"; color:var(--text-success); font-size:10px; }
+    .dim { color:var(--text-secondary); }
+    .income-cell { color:var(--text-success); font-weight:500; }
 
-    /* Rotation toggle */
-    .rotation-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .switch { position: relative; display: inline-block; width: 36px; height: 20px; cursor: pointer; flex-shrink: 0; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .switch-track { position: absolute; inset: 0; background: var(--border); border-radius: 10px; transition: background 0.15s; }
-    .switch-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: var(--bg); border-radius: 50%; transition: transform 0.15s; }
-    .switch input:checked + .switch-track { background: var(--text-info); }
-    .switch input:checked + .switch-track .switch-thumb { transform: translateX(16px); }
+    /* Rotation */
+    .rotation-toggle { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .switch { position:relative; display:inline-block; width:36px; height:20px; cursor:pointer; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .switch-track { position:absolute; inset:0; background:var(--border); border-radius:10px; transition:background 0.15s; }
+    .switch-thumb { position:absolute; top:2px; left:2px; width:16px; height:16px; background:var(--bg); border-radius:50%; transition:transform 0.15s; }
+    .switch input:checked + .switch-track { background:var(--text-info); }
+    .switch input:checked + .switch-track .switch-thumb { transform:translateX(16px); }
 
     /* Phase sections */
-    .phase-section {
-      border-radius: var(--radius-lg);
-      border: 1.5px solid var(--border);
-      margin-bottom: 1.25rem;
-      overflow: hidden;
-    }
-    .phase-section.growth { border-color: #185FA5; }
-    .phase-section.income { border-color: #E07B39; }
+    .phase-section { border-radius:var(--radius-lg); border:1.5px solid var(--border); margin-bottom:1.25rem; overflow:hidden; }
+    .phase-section.growth { border-color:#185FA5; }
+    .phase-section.income-spend  { border-color:#E07B39; }
+    .phase-section.income-legacy { border-color:#185FA5; }
+    .phase-section.income-hybrid { border-color:#1D9E75; }
 
-    .phase-header {
-      padding: 0.9rem 1rem;
-      border-bottom: 0.5px solid var(--border);
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .phase-section.growth .phase-header { background: rgba(24,95,165,0.07); }
-    .phase-section.income .phase-header { background: rgba(224,123,57,0.07); }
+    .phase-header { padding:0.9rem 1rem; border-bottom:0.5px solid var(--border); display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .phase-section.growth        .phase-header { background:rgba(24,95,165,0.07); }
+    .phase-section.income-spend  .phase-header { background:rgba(224,123,57,0.07); }
+    .phase-section.income-legacy .phase-header { background:rgba(24,95,165,0.07); }
+    .phase-section.income-hybrid .phase-header { background:rgba(29,158,117,0.07); }
 
-    .phase-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-    .phase-section.growth .phase-title { color: #185FA5; }
-    .phase-section.income .phase-title { color: #E07B39; }
-    .phase-subtitle { font-size: 12px; color: var(--text-secondary); }
+    .phase-title { font-size:15px; font-weight:600; margin-bottom:2px; }
+    .phase-section.growth        .phase-title { color:#185FA5; }
+    .phase-section.income-spend  .phase-title { color:#E07B39; }
+    .phase-section.income-legacy .phase-title { color:#185FA5; }
+    .phase-section.income-hybrid .phase-title { color:#1D9E75; }
+    .phase-subtitle { font-size:12px; color:var(--text-secondary); }
 
-    .alloc-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-    .alloc-pill {
-      font-size: 11px; font-weight: 500;
-      padding: 2px 9px; border-radius: 20px;
-      color: #fff;
-    }
+    .alloc-pills { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .alloc-pill { font-size:11px; font-weight:500; padding:2px 9px; border-radius:20px; color:#fff; }
+    .alloc-pill.zero { background:var(--border); color:var(--text-secondary); }
 
-    /* ETF cards — 4 per row inside phase sections */
-    .holdings {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      padding: 10px;
-      background: var(--bg);
-    }
-    @media (max-width: 520px) {
-      .holdings { grid-template-columns: repeat(2, 1fr); }
-    }
+    /* ETF cards */
+    .holdings { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; padding:10px; background:var(--bg); }
 
-    .holding-card { background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.85rem; }
-    .badge { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: var(--radius-md); display: inline-block; margin-bottom: 6px; }
-    .badge-blue { background: var(--bg-info); color: var(--text-info); }
-    .badge-green { background: var(--bg-success); color: var(--text-success); }
-    .badge-amber { background: var(--bg-warning); color: var(--text-warning); }
-
-    .holding-name { font-size: 20px; font-weight: 600; line-height: 1.2; margin-bottom: 2px; }
-    .holding-meta { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; }
-    .holding-meta .meta-pct { font-size: 13px; font-weight: 500; color: var(--text); }
-
-    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; font-size: 11px; }
-    .stat-label { color: var(--text-secondary); margin-bottom: 1px; }
-    .stat-val { font-weight: 500; }
-    .stat-val.high { color: var(--text-success); }
-    .stat-val.med  { color: var(--text-warning); }
-    .holding-note { font-size: 11px; color: var(--text-secondary); margin-top: 8px; line-height: 1.4; }
+    .holding-card { background:var(--bg-secondary); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:0.85rem; transition:opacity 0.2s; }
+    .holding-card.dimmed { opacity:0.35; }
+    .badge { font-size:10px; font-weight:500; padding:2px 8px; border-radius:var(--radius-md); display:inline-block; margin-bottom:6px; }
+    .badge-blue   { background:var(--bg-info);    color:var(--text-info); }
+    .badge-green  { background:var(--bg-success); color:var(--text-success); }
+    .badge-amber  { background:var(--bg-warning); color:var(--text-warning); }
+    .holding-name { font-size:20px; font-weight:600; line-height:1.2; margin-bottom:2px; }
+    .holding-meta { display:flex; justify-content:space-between; align-items:baseline; font-size:12px; color:var(--text-secondary); margin-bottom:10px; }
+    .holding-meta .meta-pct { font-size:13px; font-weight:500; color:var(--text); }
+    .stats { display:grid; grid-template-columns:1fr 1fr; gap:6px 8px; font-size:11px; }
+    .stat-label { color:var(--text-secondary); margin-bottom:1px; }
+    .stat-val { font-weight:500; }
+    .stat-val.high { color:var(--text-success); }
+    .stat-val.med  { color:var(--text-warning); }
+    .holding-note { font-size:11px; color:var(--text-secondary); margin-top:8px; line-height:1.4; }
 
     /* Tax legend */
-    .tax-legend { background: var(--bg-secondary); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.5rem; border: 0.5px solid var(--border); }
-    .tax-legend h3 { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
-    .tax-legend ul { list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
-    .tax-legend ul li.high { color: var(--text-success); }
-    .tax-legend ul li.med  { color: var(--text-warning); }
-    .tax-tip { font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
+    .tax-legend { background:var(--bg-secondary); border-radius:var(--radius-lg); padding:1rem 1.25rem; margin-bottom:1.5rem; border:0.5px solid var(--border); }
+    .tax-legend h3 { font-size:13px; font-weight:500; margin-bottom:10px; }
+    .tax-legend ul { list-style:none; display:flex; flex-direction:column; gap:4px; font-size:12px; }
+    .tax-legend ul li.high { color:var(--text-success); }
+    .tax-legend ul li.med  { color:var(--text-warning); }
+    .tax-tip { font-size:12px; color:var(--text-secondary); margin-top:8px; }
 
-    footer { font-size: 12px; color: var(--text-secondary); border-top: 0.5px solid var(--border); padding-top: 1rem; margin-top: 2rem; }
+    footer { font-size:12px; color:var(--text-secondary); border-top:0.5px solid var(--border); padding-top:1rem; margin-top:2rem; }
   </style>
 </head>
 <body>
@@ -203,6 +187,42 @@
     <h1>Dividend portfolio</h1>
     <p>Blended income + growth strategy</p>
   </header>
+
+  <!-- INTENT QUESTION -->
+  <p class="intent-question">What's your plan for this wealth?</p>
+  <div class="intent-cards">
+
+    <div class="intent-card selected-spend" id="intent-spend" onclick="selectStrategy('spend')">
+      <div class="i-title">Maximize Income</div>
+      <div class="i-desc">Live off the dividends fully. Prioritize cash flow — what's left behind is secondary.</div>
+      <div class="i-stats">
+        <div class="i-row"><span class="i-label">Exit yield</span><span class="i-val">~7.4%</span></div>
+        <div class="i-row"><span class="i-label">For $5K/mo</span><span class="i-val">~$857K</span></div>
+        <div class="i-row"><span class="i-label">Legacy</span><span class="i-val">Depletes over time</span></div>
+      </div>
+    </div>
+
+    <div class="intent-card" id="intent-legacy" onclick="selectStrategy('legacy')">
+      <div class="i-title">Build Legacy</div>
+      <div class="i-desc">Pass the portfolio intact to heirs. Live off dividends only — never touch the principal.</div>
+      <div class="i-stats">
+        <div class="i-row"><span class="i-label">Exit yield</span><span class="i-val">~3.9%</span></div>
+        <div class="i-row"><span class="i-label">For $5K/mo</span><span class="i-val">~$1.54M</span></div>
+        <div class="i-row"><span class="i-label">Legacy</span><span class="i-val">Principal grows</span></div>
+      </div>
+    </div>
+
+    <div class="intent-card" id="intent-hybrid" onclick="selectStrategy('hybrid')">
+      <div class="i-title">Balanced</div>
+      <div class="i-desc">Some income now, some left over. A middle path between spending and preserving.</div>
+      <div class="i-stats">
+        <div class="i-row"><span class="i-label">Exit yield</span><span class="i-val">~5.6%</span></div>
+        <div class="i-row"><span class="i-label">For $5K/mo</span><span class="i-val">~$1.07M</span></div>
+        <div class="i-row"><span class="i-label">Legacy</span><span class="i-val">Roughly flat</span></div>
+      </div>
+    </div>
+
+  </div>
 
   <!-- INPUTS -->
   <div class="inputs-panel">
@@ -234,14 +254,14 @@
     </div>
     <div class="slider-row">
       <label for="sl-yield">Target yield at exit</label>
-      <input type="range" id="sl-yield" min="5" max="12" step="0.5" value="7" />
-      <span class="readout" id="out-yield">7.0%</span>
+      <input type="range" id="sl-yield" min="3" max="12" step="0.5" value="7.5" />
+      <span class="readout" id="out-yield">7.5%</span>
     </div>
     <div class="scenario-btns">
       <span style="font-size:12px;color:var(--text-secondary);align-self:center;">Presets:</span>
-      <button class="scenario-btn" id="sc-aggressive"  onclick="setScenario(20000,5000,5,8,7,'sc-aggressive')">Aggressive — 5 yrs</button>
-      <button class="scenario-btn" id="sc-moderate"    onclick="setScenario(20000,3000,7,8,7,'sc-moderate')">Moderate — 7 yrs</button>
-      <button class="scenario-btn active" id="sc-conservative" onclick="setScenario(20000,2000,10,8,7,'sc-conservative')">Conservative — 10 yrs</button>
+      <button class="scenario-btn" id="sc-aggressive"  onclick="setScenario(20000,5000,5,8,'sc-aggressive')">Aggressive — 5 yrs</button>
+      <button class="scenario-btn" id="sc-moderate"    onclick="setScenario(20000,3000,7,8,'sc-moderate')">Moderate — 7 yrs</button>
+      <button class="scenario-btn active" id="sc-conservative" onclick="setScenario(20000,2000,10,8,'sc-conservative')">Conservative — 10 yrs</button>
     </div>
   </div>
 
@@ -265,11 +285,11 @@
   </div>
 
   <!-- GROWTH CHART -->
-  <div class="growth-legend">
+  <div class="chart-legend">
     <span><span class="legend-dot" style="background:#185FA5"></span>Portfolio value</span>
     <span style="display:flex;align-items:center;gap:4px;">
       <span style="display:inline-block;width:18px;height:2px;border-top:2px dashed #639922;"></span>
-      Target for $5K/mo
+      Target
     </span>
   </div>
   <div class="chart-wrap" style="height:280px;margin-bottom:1.5rem;">
@@ -278,9 +298,7 @@
 
   <!-- YEAR TABLE -->
   <p class="section-label">Year-by-year investment plan</p>
-  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">
-    Monthly amounts per ETF based on your inputs. <span style="color:var(--text-success);">↻ rows</span> = rotation years shifting toward income funds.
-  </p>
+  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">Monthly amounts per ETF. <span style="color:var(--text-success);">↻ rows</span> = rotation years shifting toward your income phase.</p>
   <div class="table-scroll">
     <table class="year-plan">
       <thead>
@@ -304,10 +322,10 @@
     </label>
     <span style="font-size:13px;">Shift from growth to income funds in the final <span id="rotation-years-label">2</span> years before goal</span>
   </div>
-  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:1rem;">Growth phase maximizes total return. Final years rotate toward SPYI/JEPI to hit the $5,000/month yield target.</p>
-  <div class="growth-legend">
-    <span><span class="legend-dot" style="background:#7F77DD"></span>Growth allocation</span>
-    <span><span class="legend-dot" style="background:#1D9E75"></span>Income allocation</span>
+  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:1rem;">Growth phase maximizes total return. Final years rotate toward your chosen income strategy.</p>
+  <div class="chart-legend">
+    <span><span class="legend-dot" style="background:#7F77DD"></span>Growth</span>
+    <span><span class="legend-dot" style="background:#1D9E75"></span>Income</span>
   </div>
   <div class="chart-wrap" style="height:200px;margin-bottom:1.5rem;">
     <canvas id="allocationChart"></canvas>
@@ -320,7 +338,7 @@
     <div class="phase-header">
       <div>
         <div class="phase-title">Growth Phase</div>
-        <div class="phase-subtitle" id="growth-subtitle">Now → Year 8 &middot; Maximize total return while building the portfolio</div>
+        <div class="phase-subtitle" id="growth-subtitle">Now — maximize total return while building the portfolio</div>
       </div>
       <div class="alloc-pills">
         <span class="alloc-pill" style="background:#185FA5">SCHD 50%</span>
@@ -330,154 +348,68 @@
       </div>
     </div>
     <div class="holdings">
-
       <div class="holding-card">
         <span class="badge badge-blue">Core</span>
         <div class="holding-name">SCHD</div>
-        <div class="holding-meta">
-          <span class="meta-pct" id="g-schd-pct">50%</span>
-          <span id="g-schd-amount">—</span>
-        </div>
+        <div class="holding-meta"><span class="meta-pct" id="g-schd-pct">50%</span><span id="g-schd-amt">—</span></div>
         <div class="stats">
           <div><div class="stat-label">Yield</div><div class="stat-val">3.5%</div></div>
           <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
           <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
           <div><div class="stat-label">Both phases</div><div class="stat-val">Yes</div></div>
         </div>
-        <p class="holding-note">Qualified dividends. ~10%/yr dividend growth. Core compounder.</p>
+        <p class="holding-note">Qualified dividends. Core compounder, ~10%/yr dividend growth.</p>
       </div>
-
       <div class="holding-card">
         <span class="badge badge-blue">Core</span>
         <div class="holding-name">DGRO</div>
-        <div class="holding-meta">
-          <span class="meta-pct" id="g-dgro-pct">25%</span>
-          <span id="g-dgro-amount">—</span>
-        </div>
+        <div class="holding-meta"><span class="meta-pct" id="g-dgro-pct">25%</span><span id="g-dgro-amt">—</span></div>
         <div class="stats">
           <div><div class="stat-label">Yield</div><div class="stat-val">2.5%</div></div>
           <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
           <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
           <div><div class="stat-label">Both phases</div><div class="stat-val">Yes</div></div>
         </div>
-        <p class="holding-note">Broader tech + healthcare. Quality growth screen.</p>
+        <p class="holding-note">Quality growth screen. Broader tech + healthcare exposure.</p>
       </div>
-
       <div class="holding-card">
         <span class="badge badge-blue">Stability</span>
         <div class="holding-name">VIG</div>
-        <div class="holding-meta">
-          <span class="meta-pct" id="g-vig-pct">15%</span>
-          <span id="g-vig-amount">—</span>
-        </div>
+        <div class="holding-meta"><span class="meta-pct" id="g-vig-pct">15%</span><span id="g-vig-amt">—</span></div>
         <div class="stats">
           <div><div class="stat-label">Yield</div><div class="stat-val">1.8%</div></div>
           <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
           <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
-          <div><div class="stat-label">Exits at</div><div class="stat-val">Rotation</div></div>
+          <div><div class="stat-label">Legacy kept</div><div class="stat-val">Yes</div></div>
         </div>
-        <p class="holding-note">10+ yrs dividend growth. Aristocrat stability. Sold at rotation.</p>
+        <p class="holding-note">10+ yrs dividend growth. Stays in legacy income phase, exits others.</p>
       </div>
-
       <div class="holding-card">
         <span class="badge badge-green">Buffer</span>
         <div class="holding-name">JEPI</div>
-        <div class="holding-meta">
-          <span class="meta-pct" id="g-jepi-pct">10%</span>
-          <span id="g-jepi-amount">—</span>
-        </div>
+        <div class="holding-meta"><span class="meta-pct" id="g-jepi-pct">10%</span><span id="g-jepi-amt">—</span></div>
         <div class="stats">
           <div><div class="stat-label">Yield</div><div class="stat-val">7–8%</div></div>
           <div><div class="stat-label">Tax</div><div class="stat-val med">★★☆</div></div>
           <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
           <div><div class="stat-label">Both phases</div><div class="stat-val">Yes</div></div>
         </div>
-        <p class="holding-note">Volatility stabilizer. Small now, grows to 25% in income phase.</p>
+        <p class="holding-note">Volatility stabilizer. Grows to 20–25% in income phase.</p>
       </div>
-
     </div>
   </div>
 
-  <!-- INCOME PHASE -->
-  <div class="phase-section income">
+  <!-- INCOME PHASE (dynamic) -->
+  <div class="phase-section income-spend" id="income-phase-section">
     <div class="phase-header">
       <div>
-        <div class="phase-title">Income Phase</div>
-        <div class="phase-subtitle" id="income-subtitle">Final 2 years → Goal &middot; Convert portfolio into $5K/month cash flow</div>
+        <div class="phase-title" id="income-phase-title">Income Phase — Maximize Income</div>
+        <div class="phase-subtitle" id="income-subtitle">Convert portfolio into cash flow</div>
       </div>
-      <div class="alloc-pills">
-        <span class="alloc-pill" style="background:#E07B39">SPYI 40%</span>
-        <span class="alloc-pill" style="background:#1D9E75">JEPI 25%</span>
-        <span class="alloc-pill" style="background:#185FA5">SCHD 25%</span>
-        <span class="alloc-pill" style="background:#639922">DGRO 10%</span>
-      </div>
+      <div class="alloc-pills" id="income-pills"></div>
     </div>
-    <div class="holdings">
-
-      <div class="holding-card">
-        <span class="badge badge-amber">High yield</span>
-        <div class="holding-name">SPYI</div>
-        <div class="holding-meta">
-          <span class="meta-pct">40%</span>
-          <span id="i-spyi-amount">—</span>
-        </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">11–12%</div></div>
-          <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
-          <div><div class="stat-label">Income only</div><div class="stat-val">Yes</div></div>
-        </div>
-        <p class="holding-note">Sec. 1256 (60% LTCG). Main income engine. Skip during growth.</p>
-      </div>
-
-      <div class="holding-card">
-        <span class="badge badge-green">Income</span>
-        <div class="holding-name">JEPI</div>
-        <div class="holding-meta">
-          <span class="meta-pct">25%</span>
-          <span id="i-jepi-amount">—</span>
-        </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">7–8%</div></div>
-          <div><div class="stat-label">Tax</div><div class="stat-val med">★★☆</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Monthly</div></div>
-          <div><div class="stat-label">Grew from</div><div class="stat-val">10%</div></div>
-        </div>
-        <p class="holding-note">Grows from 10% (growth phase) to 25%. Steadier than SPYI.</p>
-      </div>
-
-      <div class="holding-card">
-        <span class="badge badge-blue">Core</span>
-        <div class="holding-name">SCHD</div>
-        <div class="holding-meta">
-          <span class="meta-pct">25%</span>
-          <span id="i-schd-amount">—</span>
-        </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">3.5%</div></div>
-          <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
-          <div><div class="stat-label">Reduced from</div><div class="stat-val">50%</div></div>
-        </div>
-        <p class="holding-note">Trimmed from 50% to 25%. Anchor for dividend growth stability.</p>
-      </div>
-
-      <div class="holding-card">
-        <span class="badge badge-blue">Core</span>
-        <div class="holding-name">DGRO</div>
-        <div class="holding-meta">
-          <span class="meta-pct">10%</span>
-          <span id="i-dgro-amount">—</span>
-        </div>
-        <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">2.5%</div></div>
-          <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
-          <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
-          <div><div class="stat-label">Reduced from</div><div class="stat-val">25%</div></div>
-        </div>
-        <p class="holding-note">Trimmed from 25% to 10%. Retained for ongoing dividend growth.</p>
-      </div>
-
+    <div class="holdings" id="income-holdings">
+      <!-- rendered by JS -->
     </div>
   </div>
 
@@ -496,21 +428,57 @@
 
 </div>
 <script>
-  function getGoal() { return parseInt(document.getElementById('sl-goal').value); }
   const ROTATION_YEARS = 2;
 
   const ETF_GROWTH = { SCHD:0.50, DGRO:0.25, VIG:0.15, JEPI:0.10, SPYI:0.00 };
-  const ETF_INCOME = { SCHD:0.25, DGRO:0.10, VIG:0.00, JEPI:0.25, SPYI:0.40 };
-  const ETF_YIELDS = { SCHD:0.035, DGRO:0.025, VIG:0.018, JEPI:0.075, SPYI:0.11 };
+
+  const INCOME_STRATEGIES = {
+    spend: {
+      alloc:  { SCHD:0.25, DGRO:0.10, VIG:0.00, JEPI:0.25, SPYI:0.40 },
+      yield:  7.5,
+      label:  'Maximize Income',
+      desc:   'High yield, principal depletes over time',
+      colors: { SPYI:'#E07B39', JEPI:'#1D9E75', SCHD:'#185FA5', DGRO:'#639922' }
+    },
+    legacy: {
+      alloc:  { SCHD:0.45, DGRO:0.25, VIG:0.10, JEPI:0.20, SPYI:0.00 },
+      yield:  4.0,
+      label:  'Build Legacy',
+      desc:   'Lower yield, principal grows — pass it on',
+      colors: { SCHD:'#185FA5', DGRO:'#639922', VIG:'#7F77DD', JEPI:'#1D9E75' }
+    },
+    hybrid: {
+      alloc:  { SCHD:0.40, DGRO:0.20, VIG:0.00, JEPI:0.20, SPYI:0.20 },
+      yield:  5.5,
+      label:  'Balanced',
+      desc:   'Moderate yield, principal roughly flat',
+      colors: { SCHD:'#185FA5', DGRO:'#639922', JEPI:'#1D9E75', SPYI:'#E07B39' }
+    }
+  };
+
+  const ETF_YIELDS  = { SCHD:0.035, DGRO:0.025, VIG:0.018, JEPI:0.075, SPYI:0.11 };
+  const ETF_COLORS  = { SCHD:'#185FA5', DGRO:'#639922', VIG:'#7F77DD', JEPI:'#1D9E75', SPYI:'#E07B39' };
+  const ETF_BADGES  = { SCHD:'badge-blue', DGRO:'badge-blue', VIG:'badge-blue', JEPI:'badge-green', SPYI:'badge-amber' };
+  const ETF_ROLES   = { SCHD:'Core', DGRO:'Core', VIG:'Stability', JEPI:'Income', SPYI:'High yield' };
+  const ETF_NOTES   = {
+    SCHD: 'Qualified dividends. Core compounder, ~10%/yr dividend growth.',
+    DGRO: 'Quality growth screen. Broader tech + healthcare exposure.',
+    VIG:  '10+ yrs dividend growth. Aristocrat stability. Preserved in legacy strategy.',
+    JEPI: 'Covered-call income. Monthly payer, less upside-capped than SPYI.',
+    SPYI: 'Sec. 1256 (60% LTCG). Highest yield. Spend-down and hybrid strategies only.'
+  };
   const ETFS = ['SCHD','DGRO','VIG','JEPI','SPYI'];
 
+  let activeStrategy = 'spend';
   let growthChart = null, allocationChart = null;
 
+  function getGoal()    { return parseInt(document.getElementById('sl-goal').value); }
   function getStart()   { return parseInt(document.getElementById('sl-start').value); }
   function getMonthly() { return parseInt(document.getElementById('sl-monthly').value); }
   function getYears()   { return parseInt(document.getElementById('sl-years').value); }
   function getRet()     { return parseFloat(document.getElementById('sl-return').value); }
   function getYld()     { return parseFloat(document.getElementById('sl-yield').value); }
+  function getIncomeAlloc() { return INCOME_STRATEGIES[activeStrategy].alloc; }
 
   function fmt(n)  { return '$' + Math.round(n).toLocaleString(); }
   function fmtK(n) { return n >= 1e6 ? '$'+(n/1e6).toFixed(2)+'M' : '$'+(n/1000).toFixed(0)+'K'; }
@@ -519,11 +487,12 @@
     const rotOn = document.getElementById('sl-rotation').checked;
     const rotYrs = Math.min(ROTATION_YEARS, years);
     const fg = years - yr;
+    const income = getIncomeAlloc();
     if (!rotOn || fg > rotYrs) return { ...ETF_GROWTH };
-    if (fg <= 0) return { ...ETF_INCOME };
+    if (fg <= 0) return { ...income };
     const p = 1 - fg / rotYrs;
     const r = {};
-    ETFS.forEach(e => { r[e] = ETF_GROWTH[e] + p * (ETF_INCOME[e] - ETF_GROWTH[e]); });
+    ETFS.forEach(e => { r[e] = ETF_GROWTH[e] + p * (income[e] - ETF_GROWTH[e]); });
     return r;
   }
 
@@ -534,19 +503,99 @@
     return start * Math.pow(1+r,n) + monthly * (Math.pow(1+r,n)-1) / r;
   }
 
+  function selectStrategy(key) {
+    activeStrategy = key;
+    // Update intent card highlight
+    ['spend','legacy','hybrid'].forEach(k => {
+      const el = document.getElementById('intent-'+k);
+      el.className = 'intent-card' + (k === key ? ' selected-'+k : '');
+    });
+    // Auto-set yield slider to match strategy
+    document.getElementById('sl-yield').value = INCOME_STRATEGIES[key].yield;
+    // Clear preset selection
+    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+    updatePlanner();
+  }
+
+  function renderIncomePills(alloc) {
+    const container = document.getElementById('income-pills');
+    container.innerHTML = '';
+    const strat = INCOME_STRATEGIES[activeStrategy];
+    ETFS.filter(e => alloc[e] > 0.005).forEach(e => {
+      const pill = document.createElement('span');
+      const pct = Math.round(alloc[e]*100);
+      const color = strat.colors[e] || ETF_COLORS[e];
+      pill.className = 'alloc-pill';
+      pill.style.background = color;
+      pill.textContent = `${e} ${pct}%`;
+      container.appendChild(pill);
+    });
+  }
+
+  function renderIncomeCards(monthly) {
+    const alloc = getIncomeAlloc();
+    const container = document.getElementById('income-holdings');
+    container.innerHTML = '';
+    ETFS.filter(e => alloc[e] > 0.005).forEach(e => {
+      const pct = Math.round(alloc[e]*100);
+      const amt = fmt(monthly * alloc[e]);
+      const yieldPct = (ETF_YIELDS[e]*100).toFixed(1)+'%';
+      const taxVal = (e === 'JEPI') ? '<span class="stat-val med">★★☆</span>' : '<span class="stat-val high">★★★</span>';
+      container.innerHTML += `
+        <div class="holding-card">
+          <span class="badge ${ETF_BADGES[e]}">${ETF_ROLES[e]}</span>
+          <div class="holding-name">${e}</div>
+          <div class="holding-meta">
+            <span class="meta-pct">${pct}%</span>
+            <span>${amt}/mo</span>
+          </div>
+          <div class="stats">
+            <div><div class="stat-label">Yield</div><div class="stat-val">${yieldPct}</div></div>
+            <div><div class="stat-label">Tax</div>${taxVal}</div>
+            <div><div class="stat-label">Payout</div><div class="stat-val">${e==='JEPI'||e==='SPYI'?'Monthly':'Qtrly'}</div></div>
+            <div><div class="stat-label">Role</div><div class="stat-val">${ETF_ROLES[e]}</div></div>
+          </div>
+          <p class="holding-note">${ETF_NOTES[e]}</p>
+        </div>`;
+    });
+  }
+
+  function updateIncomePhaseSection(monthly, years) {
+    const strat = INCOME_STRATEGIES[activeStrategy];
+    const alloc = strat.alloc;
+    const section = document.getElementById('income-phase-section');
+    section.className = `phase-section income-${activeStrategy}`;
+    document.getElementById('income-phase-title').textContent = `Income Phase — ${strat.label}`;
+    const curYear = new Date().getFullYear();
+    const rotYrs = Math.min(ROTATION_YEARS, years);
+    document.getElementById('growth-subtitle').textContent =
+      `Now → ${curYear+years-rotYrs} · Maximize total return while building the portfolio`;
+    document.getElementById('income-subtitle').textContent =
+      `${curYear+years-rotYrs} → ${curYear+years} · ${strat.desc}`;
+    renderIncomePills(alloc);
+    renderIncomeCards(monthly);
+  }
+
+  function updateGrowthCards(monthly, years) {
+    const g = getAllocForYear(1, years);
+    [['SCHD','g-schd'],['DGRO','g-dgro'],['VIG','g-vig'],['JEPI','g-jepi']].forEach(([e,id]) => {
+      const pct = Math.round(g[e]*100);
+      document.getElementById(id+'-pct').textContent = pct+'%';
+      document.getElementById(id+'-amt').textContent = pct > 0 ? fmt(monthly*g[e])+'/mo' : '—';
+    });
+  }
+
   function buildYearTable(start, monthly, years, ret) {
     const tbody = document.getElementById('year-plan-body');
     tbody.innerHTML = '';
     const curYear = new Date().getFullYear();
     const rotYrs = Math.min(ROTATION_YEARS, years);
     const rotOn = document.getElementById('sl-rotation').checked;
-
     for (let yr = 1; yr <= years; yr++) {
       const alloc = getAllocForYear(yr, years);
       const pv = portfolioAt(start, monthly, yr, ret);
       const income = pv * blendedYield(alloc) / 12;
-      const fg = years - yr;
-      const isRot = rotOn && fg < rotYrs && fg >= 0;
+      const isRot = rotOn && (years-yr) < rotYrs && (years-yr) >= 0;
       const cell = e => alloc[e] > 0.005 ? fmt(monthly*alloc[e]) : '<span class="dim">—</span>';
       const tr = document.createElement('tr');
       if (isRot) tr.className = 'rotation-row';
@@ -558,30 +607,9 @@
     }
   }
 
-  function updatePhaseCards(monthly, years) {
-    // Growth cards (year 1 allocation)
-    const g = getAllocForYear(1, years);
-    [['SCHD','g-schd'],['DGRO','g-dgro'],['VIG','g-vig'],['JEPI','g-jepi']].forEach(([e,id]) => {
-      const pct = Math.round(g[e]*100);
-      document.getElementById(id+'-pct').textContent = pct+'%';
-      document.getElementById(id+'-amount').textContent = pct > 0 ? fmt(monthly*g[e])+'/mo' : '—';
-    });
-    // Growth subtitle
-    const rotYrs = Math.min(ROTATION_YEARS, years);
-    const curYear = new Date().getFullYear();
-    document.getElementById('growth-subtitle').textContent =
-      `Now → ${curYear + years - rotYrs} · Maximize total return while building the portfolio`;
-    document.getElementById('income-subtitle').textContent =
-      `${curYear + years - rotYrs} → ${curYear + years} · Convert portfolio into ${fmt(getGoal())}/month cash flow`;
-
-    // Income cards (fixed ETF_INCOME allocations)
-    [['SPYI','i-spyi'],['JEPI','i-jepi'],['SCHD','i-schd'],['DGRO','i-dgro']].forEach(([e,id]) => {
-      document.getElementById(id+'-amount').textContent = fmt(monthly*ETF_INCOME[e])+'/mo';
-    });
-  }
-
   function updatePlanner() {
-    const goal=getGoal(), start=getStart(), monthly=getMonthly(), years=getYears(), ret=getRet(), yld=getYld();
+    const goal=getGoal(), start=getStart(), monthly=getMonthly(),
+          years=getYears(), ret=getRet(), yld=getYld();
 
     document.getElementById('out-goal').textContent    = fmt(goal)+'/mo';
     document.getElementById('out-start').textContent   = fmt(start);
@@ -594,15 +622,14 @@
     const reached = portfolioAt(start, monthly, years, ret);
     const annInc  = reached * (yld/100);
     const moInc   = annInc / 12;
-    const totalInv = start + monthly*years*12;
-    const gap = goal - moInc;
+    const gap     = goal - moInc;
 
     document.getElementById('m-needed').textContent  = fmtK(needed);
     document.getElementById('m-reached').textContent = fmtK(reached);
     const incEl = document.getElementById('m-income');
     incEl.textContent = fmt(moInc)+'/mo';
-    incEl.className = 'value '+(moInc >= goal ? 'green' : 'warn');
-    document.getElementById('m-invested').textContent = fmtK(totalInv);
+    incEl.className   = 'value '+(moInc >= goal ? 'green' : 'warn');
+    document.getElementById('m-invested').textContent = fmtK(start + monthly*years*12);
 
     document.getElementById('v-start').textContent       = fmt(start);
     document.getElementById('v-monthly').textContent     = fmt(monthly)+'/mo';
@@ -641,15 +668,15 @@
     }
 
     buildYearTable(start, monthly, years, ret);
-    updatePhaseCards(monthly, years);
+    updateGrowthCards(monthly, years);
+    updateIncomePhaseSection(monthly, years);
   }
 
-  function setScenario(start, monthly, years, ret, yld, activeId) {
+  function setScenario(start, monthly, years, ret, activeId) {
     document.getElementById('sl-start').value   = start;
     document.getElementById('sl-monthly').value = monthly;
     document.getElementById('sl-years').value   = years;
     document.getElementById('sl-return').value  = ret;
-    document.getElementById('sl-yield').value   = yld;
     document.querySelectorAll('.scenario-btn').forEach(b=>b.classList.remove('active'));
     document.getElementById(activeId).classList.add('active');
     updatePlanner();
@@ -657,12 +684,12 @@
 
   function init() {
     growthChart = new Chart(document.getElementById('growthChart'), {
-      type: 'line',
-      data: { labels:[], datasets:[
-        { label:'Portfolio value', data:[], borderColor:'#185FA5', backgroundColor:'rgba(24,95,165,0.08)', fill:true, tension:0.3, pointRadius:3, borderWidth:2 },
-        { label:'Target', data:[], borderColor:'#639922', borderDash:[6,4], borderWidth:2, pointRadius:0, fill:false }
+      type:'line',
+      data:{ labels:[], datasets:[
+        { label:'Portfolio', data:[], borderColor:'#185FA5', backgroundColor:'rgba(24,95,165,0.08)', fill:true, tension:0.3, pointRadius:3, borderWidth:2 },
+        { label:'Target',    data:[], borderColor:'#639922', borderDash:[6,4], borderWidth:2, pointRadius:0, fill:false }
       ]},
-      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
         scales:{y:{ticks:{callback:v=>v>=1e6?'$'+(v/1e6).toFixed(1)+'M':'$'+(v/1000).toFixed(0)+'K'}}} }
     });
 
