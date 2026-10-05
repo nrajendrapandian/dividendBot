@@ -201,12 +201,17 @@
 
   <header>
     <h1>Dividend portfolio</h1>
-    <p>Goal: $5,000/month &middot; blended income + growth strategy</p>
+    <p>Blended income + growth strategy</p>
   </header>
 
   <!-- INPUTS -->
   <div class="inputs-panel">
     <h2>Adjust your inputs</h2>
+    <div class="slider-row">
+      <label for="sl-goal">Goal (monthly income)</label>
+      <input type="range" id="sl-goal" min="1000" max="20000" step="500" value="5000" />
+      <span class="readout" id="out-goal">$5,000/mo</span>
+    </div>
     <div class="slider-row">
       <label for="sl-start">Initial investment</label>
       <input type="range" id="sl-start" min="1000" max="200000" step="1000" value="20000" />
@@ -256,7 +261,7 @@
     <div class="verdict-row"><span class="k">Portfolio at end</span><span class="v" id="v-port">—</span></div>
     <div class="verdict-row"><span class="k">Annual dividend income</span><span class="v" id="v-annual">—</span></div>
     <div class="verdict-row"><span class="k">Monthly dividend income</span><span class="v" id="v-monthly-inc">—</span></div>
-    <div class="verdict-row"><span class="k">Gap to $5K/month goal</span><span class="v" id="v-gap">—</span></div>
+    <div class="verdict-row"><span class="k">Gap to goal</span><span class="v" id="v-gap">—</span></div>
   </div>
 
   <!-- GROWTH CHART -->
@@ -491,7 +496,7 @@
 
 </div>
 <script>
-  const TARGET_MONTHLY_INC = 5000;
+  function getGoal() { return parseInt(document.getElementById('sl-goal').value); }
   const ROTATION_YEARS = 2;
 
   const ETF_GROWTH = { SCHD:0.50, DGRO:0.25, VIG:0.15, JEPI:0.10, SPYI:0.00 };
@@ -567,7 +572,7 @@
     document.getElementById('growth-subtitle').textContent =
       `Now → ${curYear + years - rotYrs} · Maximize total return while building the portfolio`;
     document.getElementById('income-subtitle').textContent =
-      `${curYear + years - rotYrs} → ${curYear + years} · Convert portfolio into $5K/month cash flow`;
+      `${curYear + years - rotYrs} → ${curYear + years} · Convert portfolio into ${fmt(getGoal())}/month cash flow`;
 
     // Income cards (fixed ETF_INCOME allocations)
     [['SPYI','i-spyi'],['JEPI','i-jepi'],['SCHD','i-schd'],['DGRO','i-dgro']].forEach(([e,id]) => {
@@ -576,20 +581,21 @@
   }
 
   function updatePlanner() {
-    const start=getStart(), monthly=getMonthly(), years=getYears(), ret=getRet(), yld=getYld();
+    const goal=getGoal(), start=getStart(), monthly=getMonthly(), years=getYears(), ret=getRet(), yld=getYld();
 
+    document.getElementById('out-goal').textContent    = fmt(goal)+'/mo';
     document.getElementById('out-start').textContent   = fmt(start);
     document.getElementById('out-monthly').textContent = fmt(monthly);
     document.getElementById('out-years').textContent   = years+' yrs';
     document.getElementById('out-return').textContent  = ret.toFixed(1)+'%';
     document.getElementById('out-yield').textContent   = yld.toFixed(1)+'%';
 
-    const needed  = (TARGET_MONTHLY_INC*12) / (yld/100);
+    const needed  = (goal*12) / (yld/100);
     const reached = portfolioAt(start, monthly, years, ret);
     const annInc  = reached * (yld/100);
     const moInc   = annInc / 12;
     const totalInv = start + monthly*years*12;
-    const gap = TARGET_MONTHLY_INC - moInc;
+    const gap = goal - moInc;
 
     document.getElementById('m-needed').textContent  = fmtK(needed);
     document.getElementById('m-reached').textContent = fmtK(reached);
@@ -675,7 +681,7 @@
   }
 
   document.getElementById('sl-rotation').addEventListener('change', updatePlanner);
-  ['sl-start','sl-monthly','sl-years','sl-return','sl-yield'].forEach(id => {
+  ['sl-goal','sl-start','sl-monthly','sl-years','sl-return','sl-yield'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
       document.querySelectorAll('.scenario-btn').forEach(b=>b.classList.remove('active'));
       updatePlanner();
