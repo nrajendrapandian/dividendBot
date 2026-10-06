@@ -227,6 +227,12 @@
   <!-- INPUTS -->
   <div class="inputs-panel">
     <h2>Adjust your inputs</h2>
+    <div class="scenario-btns" style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:0.5px solid var(--border);border-top:none;padding-top:0;margin-top:0;">
+      <span style="font-size:12px;color:var(--text-secondary);align-self:center;">Quick start:</span>
+      <button class="scenario-btn" id="sc-aggressive"  onclick="setScenario(20000,5000,5,8,'sc-aggressive')">Aggressive — 5 yrs</button>
+      <button class="scenario-btn" id="sc-moderate"    onclick="setScenario(20000,3000,7,8,'sc-moderate')">Moderate — 7 yrs</button>
+      <button class="scenario-btn active" id="sc-conservative" onclick="setScenario(20000,2000,10,8,'sc-conservative')">Conservative — 10 yrs</button>
+    </div>
     <div class="slider-row">
       <label for="sl-goal">Goal (monthly income)</label>
       <input type="range" id="sl-goal" min="1000" max="20000" step="500" value="5000" />
@@ -256,12 +262,6 @@
       <label for="sl-yield">Target yield at exit</label>
       <input type="range" id="sl-yield" min="3" max="12" step="0.5" value="7.5" />
       <span class="readout" id="out-yield">7.5%</span>
-    </div>
-    <div class="scenario-btns">
-      <span style="font-size:12px;color:var(--text-secondary);align-self:center;">Presets:</span>
-      <button class="scenario-btn" id="sc-aggressive"  onclick="setScenario(20000,5000,5,8,'sc-aggressive')">Aggressive — 5 yrs</button>
-      <button class="scenario-btn" id="sc-moderate"    onclick="setScenario(20000,3000,7,8,'sc-moderate')">Moderate — 7 yrs</button>
-      <button class="scenario-btn active" id="sc-conservative" onclick="setScenario(20000,2000,10,8,'sc-conservative')">Conservative — 10 yrs</button>
     </div>
   </div>
 
