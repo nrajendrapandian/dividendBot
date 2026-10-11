@@ -75,6 +75,13 @@
     .slider-row label { font-size:13px; color:var(--text-secondary); min-width:170px; }
     .slider-row input[type=range] { flex:1; }
     .slider-row .readout { font-size:13px; font-weight:500; min-width:88px; text-align:right; }
+    @media(max-width:560px) {
+      .slider-row { flex-wrap:wrap; gap:4px 8px; }
+      .slider-row label { min-width:100%; margin-bottom:0; font-size:12px; }
+      .slider-row input[type=range] { flex:1; }
+      .slider-row .readout { min-width:72px; font-size:13px; }
+      .scenario-btn { font-size:12px; padding:4px 10px; }
+    }
     .scenario-btns { display:flex; flex-wrap:wrap; gap:8px; margin-top:1rem; padding-top:1rem; border-top:0.5px solid var(--border); }
     .scenario-btn { font-size:13px; padding:5px 12px; border-radius:var(--radius-md); border:0.5px solid var(--border); background:var(--bg-secondary); color:var(--text); cursor:pointer; }
     .scenario-btn.active { border-color:var(--text-info); color:var(--text-info); background:var(--bg-info); }
