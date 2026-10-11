@@ -177,6 +177,35 @@
     .tax-legend ul li.med  { color:var(--text-warning); }
     .tax-tip { font-size:12px; color:var(--text-secondary); margin-top:8px; }
 
+    /* Portfolio CTA button + tooltip */
+    .tooltip-wrap { position:relative; display:inline-block; }
+    .portfolio-btn {
+      font-size:13px; padding:7px 16px; border-radius:var(--radius-md);
+      border:1.5px dashed var(--border); background:transparent; color:var(--text-secondary);
+      cursor:pointer; transition:border-color 0.15s, color 0.15s;
+    }
+    .portfolio-btn:hover,
+    .portfolio-btn:focus { border-color:var(--text-info); color:var(--text-info); outline:none; }
+
+    .tooltip-bubble {
+      position:absolute; left:50%; transform:translateX(-50%);
+      bottom:calc(100% + 8px); white-space:nowrap;
+      background:var(--text); color:var(--bg); font-size:12px;
+      padding:6px 12px; border-radius:var(--radius-md);
+      pointer-events:none; opacity:0; transition:opacity 0.15s;
+      z-index:10;
+    }
+    .tooltip-bubble::after {
+      content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+      border:5px solid transparent; border-top-color:var(--text);
+    }
+    .tooltip-wrap:hover .tooltip-bubble,
+    .portfolio-btn:focus + .tooltip-bubble { opacity:1; }
+
+    @media(max-width:480px) {
+      .tooltip-bubble { white-space:normal; width:220px; text-align:center; }
+    }
+
     footer { font-size:12px; color:var(--text-secondary); border-top:0.5px solid var(--border); padding-top:1rem; margin-top:2rem; }
   </style>
 </head>
@@ -222,6 +251,14 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- PORTFOLIO ENTRY CTA -->
+  <div style="margin-bottom:1.25rem;">
+    <div class="tooltip-wrap">
+      <button class="portfolio-btn" aria-describedby="portfolio-tip">I already have a portfolio</button>
+      <span class="tooltip-bubble" id="portfolio-tip" role="tooltip">Coming soon — track your real holdings &amp; actual progress</span>
+    </div>
   </div>
 
   <!-- INPUTS -->
