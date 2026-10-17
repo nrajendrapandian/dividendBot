@@ -348,7 +348,7 @@
       <thead>
         <tr>
           <th>Year</th>
-          <th>SCHD/mo</th><th>DGRO/mo</th><th>VIG/mo</th>
+          <th>SCHD/mo</th><th>DGRO/mo</th><th>NOBL/mo</th>
           <th>JEPI/mo</th><th>SPYI/mo</th>
           <th>Portfolio</th><th>Income/mo</th>
         </tr>
@@ -387,7 +387,7 @@
       <div class="alloc-pills">
         <span class="alloc-pill" style="background:#185FA5">SCHD 50%</span>
         <span class="alloc-pill" style="background:#639922">DGRO 25%</span>
-        <span class="alloc-pill" style="background:#7F77DD">VIG 15%</span>
+        <span class="alloc-pill" style="background:#7F77DD">NOBL 15%</span>
         <span class="alloc-pill" style="background:#1D9E75">JEPI 10%</span>
       </div>
     </div>
@@ -417,16 +417,16 @@
         <p class="holding-note">Quality growth screen. Broader tech + healthcare exposure.</p>
       </div>
       <div class="holding-card">
-        <span class="badge badge-blue">Stability</span>
-        <div class="holding-name">VIG</div>
+        <span class="badge badge-blue">Diversifier</span>
+        <div class="holding-name">NOBL</div>
         <div class="holding-meta"><span class="meta-pct" id="g-vig-pct">15%</span><span id="g-vig-amt">—</span></div>
         <div class="stats">
-          <div><div class="stat-label">Yield</div><div class="stat-val">1.8%</div></div>
+          <div><div class="stat-label">Yield</div><div class="stat-val">2.0%</div></div>
           <div><div class="stat-label">Tax</div><div class="stat-val high">★★★</div></div>
           <div><div class="stat-label">Payout</div><div class="stat-val">Qtrly</div></div>
           <div><div class="stat-label">Legacy kept</div><div class="stat-val">Yes</div></div>
         </div>
-        <p class="holding-note">10+ yrs dividend growth. Stays in legacy income phase, exits others.</p>
+        <p class="holding-note">S&amp;P 500 Dividend Aristocrats (25+ yr streak). Equal-weighted — genuine sector diversification vs SCHD/DGRO.</p>
       </div>
       <div class="holding-card">
         <span class="badge badge-green">Buffer</span>
@@ -474,25 +474,25 @@
 <script>
   const ROTATION_YEARS = 2;
 
-  const ETF_GROWTH = { SCHD:0.50, DGRO:0.25, VIG:0.15, JEPI:0.10, SPYI:0.00 };
+  const ETF_GROWTH = { SCHD:0.50, DGRO:0.25, NOBL:0.15, JEPI:0.10, SPYI:0.00 };
 
   const INCOME_STRATEGIES = {
     spend: {
-      alloc:  { SCHD:0.25, DGRO:0.10, VIG:0.00, JEPI:0.25, SPYI:0.40 },
+      alloc:  { SCHD:0.25, DGRO:0.10, NOBL:0.00, JEPI:0.25, SPYI:0.40 },
       yield:  7.5,
       label:  'Maximize Income',
       desc:   'High yield, principal depletes over time',
       colors: { SPYI:'#E07B39', JEPI:'#1D9E75', SCHD:'#185FA5', DGRO:'#639922' }
     },
     legacy: {
-      alloc:  { SCHD:0.45, DGRO:0.25, VIG:0.10, JEPI:0.20, SPYI:0.00 },
+      alloc:  { SCHD:0.45, DGRO:0.25, NOBL:0.10, JEPI:0.20, SPYI:0.00 },
       yield:  4.0,
       label:  'Build Legacy',
       desc:   'Lower yield, principal grows — pass it on',
-      colors: { SCHD:'#185FA5', DGRO:'#639922', VIG:'#7F77DD', JEPI:'#1D9E75' }
+      colors: { SCHD:'#185FA5', DGRO:'#639922', NOBL:'#7F77DD', JEPI:'#1D9E75' }
     },
     hybrid: {
-      alloc:  { SCHD:0.40, DGRO:0.20, VIG:0.00, JEPI:0.20, SPYI:0.20 },
+      alloc:  { SCHD:0.40, DGRO:0.20, NOBL:0.00, JEPI:0.20, SPYI:0.20 },
       yield:  5.5,
       label:  'Balanced',
       desc:   'Moderate yield, principal roughly flat',
@@ -500,18 +500,18 @@
     }
   };
 
-  const ETF_YIELDS  = { SCHD:0.035, DGRO:0.025, VIG:0.018, JEPI:0.075, SPYI:0.11 };
-  const ETF_COLORS  = { SCHD:'#185FA5', DGRO:'#639922', VIG:'#7F77DD', JEPI:'#1D9E75', SPYI:'#E07B39' };
-  const ETF_BADGES  = { SCHD:'badge-blue', DGRO:'badge-blue', VIG:'badge-blue', JEPI:'badge-green', SPYI:'badge-amber' };
-  const ETF_ROLES   = { SCHD:'Core', DGRO:'Core', VIG:'Stability', JEPI:'Income', SPYI:'High yield' };
+  const ETF_YIELDS  = { SCHD:0.035, DGRO:0.025, NOBL:0.020, JEPI:0.075, SPYI:0.11 };
+  const ETF_COLORS  = { SCHD:'#185FA5', DGRO:'#639922', NOBL:'#7F77DD', JEPI:'#1D9E75', SPYI:'#E07B39' };
+  const ETF_BADGES  = { SCHD:'badge-blue', DGRO:'badge-blue', NOBL:'badge-blue', JEPI:'badge-green', SPYI:'badge-amber' };
+  const ETF_ROLES   = { SCHD:'Core', DGRO:'Core', NOBL:'Diversifier', JEPI:'Income', SPYI:'High yield' };
   const ETF_NOTES   = {
     SCHD: 'Qualified dividends. Core compounder, ~10%/yr dividend growth.',
     DGRO: 'Quality growth screen. Broader tech + healthcare exposure.',
-    VIG:  '10+ yrs dividend growth. Aristocrat stability. Preserved in legacy strategy.',
+    NOBL: 'S&P 500 Dividend Aristocrats (25+ yr streak). Equal-weighted — genuine sector diversification vs SCHD/DGRO.',
     JEPI: 'Covered-call income. Monthly payer, less upside-capped than SPYI.',
     SPYI: 'Sec. 1256 (60% LTCG). Highest yield. Spend-down and hybrid strategies only.'
   };
-  const ETFS = ['SCHD','DGRO','VIG','JEPI','SPYI'];
+  const ETFS = ['SCHD','DGRO','NOBL','JEPI','SPYI'];
 
   let activeStrategy = 'spend';
   let growthChart = null, allocationChart = null;
@@ -622,7 +622,7 @@
 
   function updateGrowthCards(monthly, years) {
     const g = getAllocForYear(1, years);
-    [['SCHD','g-schd'],['DGRO','g-dgro'],['VIG','g-vig'],['JEPI','g-jepi']].forEach(([e,id]) => {
+    [['SCHD','g-schd'],['DGRO','g-dgro'],['NOBL','g-vig'],['JEPI','g-jepi']].forEach(([e,id]) => {
       const pct = Math.round(g[e]*100);
       document.getElementById(id+'-pct').textContent = pct+'%';
       document.getElementById(id+'-amt').textContent = pct > 0 ? fmt(monthly*g[e])+'/mo' : '—';
@@ -644,7 +644,7 @@
       const tr = document.createElement('tr');
       if (isRot) tr.className = 'rotation-row';
       tr.innerHTML = `<td>Yr ${yr} &middot; ${curYear+yr-1}</td>
-        <td>${cell('SCHD')}</td><td>${cell('DGRO')}</td><td>${cell('VIG')}</td>
+        <td>${cell('SCHD')}</td><td>${cell('DGRO')}</td><td>${cell('NOBL')}</td>
         <td>${cell('JEPI')}</td><td>${cell('SPYI')}</td>
         <td>${fmtK(pv)}</td><td class="income-cell">${fmt(income)}/mo</td>`;
       tbody.appendChild(tr);
